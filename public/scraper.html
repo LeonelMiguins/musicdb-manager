@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Scraper Servidor</title>
+  <style>
+    body {
+      background-color: #121212; /* fundo escuro, mas não totalmente preto */
+      color: #f0f0f0; /* texto claro */
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h1 {
+      margin-top: 20px;
+      color: #f9a825;
+    }
+
+    input[type="text"], input[type="number"] {
+      width: 300px;
+      padding: 10px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 5px;
+      background-color: #1e1e1e;
+      color: #f0f0f0;
+    }
+
+    button {
+      padding: 10px 20px;
+      margin: 5px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      background-color: #f9a825;
+      color: #121212;
+      font-weight: bold;
+      transition: background-color 0.2s;
+    }
+
+    button:hover {
+      background-color: #ffca28;
+    }
+
+    #results {
+      width: 80%;
+      max-width: 700px;
+      margin-top: 20px;
+      background-color: #1e1e1e;
+      padding: 15px;
+      border-radius: 8px;
+      overflow-y: auto;
+      max-height: 400px;
+    }
+
+    #results img {
+      max-width: 200px;
+      display: block;
+      margin-bottom: 10px;
+      border-radius: 5px;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    li a {
+      color: #f9a825;
+      text-decoration: none;
+    }
+
+    li a:hover {
+      text-decoration: underline;
+    }
+
+    .top-bar {
+      width: 100%;
+      background-color: #1e1e1e;
+      padding: 10px;
+      display: flex;
+      justify-content: flex-start;
+    }
+
+    .top-bar button {
+      margin: 0;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="top-bar">
+    <button onclick="window.location.href='index.html'">Voltar ao Gerenciador</button>
+  </div>
+
+  <h1>Scraper Servidor</h1>
+
+  <input type="text" id="url" placeholder="Cole a URL do Internet Archive">
+  <input type="text" id="albumName" placeholder="Nome do Álbum">
+  <input type="number" id="artistId" placeholder="ID do Artista">
+  <button id="scrapeBtn">Buscar</button>
+  <button id="saveBtn" style="display:none;">Salvar no Banco</button>
+
+  <div id="results"></div>
+
+  <script src="scraper.js"></script>
+</body>
+</html>

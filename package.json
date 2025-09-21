@@ -1,0 +1,71 @@
+{
+  "name": "musicdb-manager",
+  "version": "1.0.0",
+  "description": "Aplicação para gerenciar banco de dados do aplicativo dark spotify",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "scraping-ia": "node scripts/scraping-ia.js",
+    "create-db": "node scripts/create-db.js",
+    "dist": "electron-builder"
+  },
+  "keywords": [],
+  "author": "Seu Nome",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.11.0",
+    "body-parser": "^2.2.0",
+    "cheerio": "^1.1.2",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "sqlite3": "^5.1.7"
+  },
+  "devDependencies": {
+    "electron": "^37.3.1",
+    "electron-builder": "^26.0.12"
+  },
+  "build": {
+    
+    "appId": "com.seuprojeto.musicdb-manager",
+    "productName": "musicdb-manager",
+    "directories": {
+      "output": "dist"
+    },
+    "artifactName": "${productName}-${version}-${os}-${arch}.${ext}",
+    "files": [
+      "public/**/*",
+      "scripts/**/*",
+      "controllers/**/*",
+      "main.js",
+      "preload.js",
+      "package.json",
+      "output/**/*"
+    ],
+    "extraResources": [
+      { "from": "db/", "to": "db/" },
+      { "from": "icons/", "to": "/icons" }
+    ],
+    "asar": true,
+    "asarUnpack": [
+      "**/*.node"
+    ],
+    "win": {
+      "icon": "icons/icon.png",
+      "target": ["nsis"]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    },
+    "linux": {
+      "icon": "icons",
+      "target": ["AppImage"]
+    },
+    "mac": {
+      "icon": "icons/icon.ico",
+      "category": "public.app-category.music"
+    }
+  }
+}
