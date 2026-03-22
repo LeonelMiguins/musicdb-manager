@@ -4,16 +4,17 @@ const sqlite3 = require("sqlite3").verbose();
 const { app, shell } = require("electron");
 
 async function exportDB() {
-  // Caminho do banco real em uso
-  const userDataPath = app.getPath("userData");
-  const dbPath = path.join(userDataPath, "musicas.db");
 
-  // Pasta de saída (dev: ./output, dist: userData/output)
+  // ✅ Caminho do banco (padronizado)
+  const dbPath = app.isPackaged
+    ? path.join(app.getPath("userData"), "musicas.db")
+    : path.join(__dirname, "../db/musicas.db");
+
+  // ✅ Pasta de saída
   const outputDir = app.isPackaged
-    ? path.join(userDataPath, "output") // dist -> dentro de AppData/...
-    : path.join(__dirname, "../output"); // dev -> pasta local do projeto
+    ? path.join(app.getPath("userData"), "output")
+    : path.join(__dirname, "../output");
 
-  // Cria a pasta se não existir
   if (!fs.existsSync(outputDir)) {
     fs.mkdirSync(outputDir, { recursive: true });
   }
@@ -66,11 +67,11 @@ async function exportDB() {
     fs.writeFileSync(outputPath, JSON.stringify(exportData, null, 2), "utf-8");
     db.close();
 
-    // Abre a pasta no Explorer/Finder
     shell.showItemInFolder(outputPath);
 
-    console.log(`Exportação concluída! Arquivo gerado em: ${outputPath}`);
+    console.log(`Exportação concluída! Arquivo em: ${outputPath}`);
     return { success: true, path: outputPath };
+
   } catch (err) {
     db.close();
     console.error("Erro na exportação:", err.message);

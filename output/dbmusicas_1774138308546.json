@@ -1,0 +1,225 @@
+[
+  {
+    "id": 1,
+    "nome": "The Fictives",
+    "genero": "Rock",
+    "cover": "https://i.scdn.co/image/ab67616d0000b2730ea1ecb2d5271c2db402b0c2",
+    "albuns": [
+      {
+        "id": 1,
+        "nome": "Rocking the World",
+        "cover": "https://i.scdn.co/image/ab67616d0000b273c34064a3c5e4a25892a091f3",
+        "servidor": "Spotify",
+        "tracks": [
+          {
+            "id": 1,
+            "title": "High Voltage",
+            "url": "https://example.com/musica1.mp3"
+          },
+          {
+            "id": 2,
+            "title": "Electric Heart",
+            "url": "https://example.com/musica2.mp3"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "nome": "Acoustic Dreams",
+        "cover": "https://i.scdn.co/image/ab67616d0000b273c34064a3c5e4a25892a091f3",
+        "servidor": "Apple Music",
+        "tracks": [
+          {
+            "id": 3,
+            "title": "Soft Strings",
+            "url": "https://example.com/musica3.mp3"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "nome": "Average Sevenfold",
+    "genero": "Rock",
+    "cover": "https://i.scdn.co/image/ab67616d0000b2730ea1ecb2d5271c2db402b0c2",
+    "albuns": [
+      {
+        "id": 3,
+        "nome": "Heavenly Riffs",
+        "cover": "https://i.scdn.co/image/ab67616d0000b273c34064a3c5e4a25892a091f3",
+        "servidor": "YouTube Music",
+        "tracks": [
+          {
+            "id": 4,
+            "title": "Shining Stars",
+            "url": "https://example.com/musica4.mp3"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "nome": "Synth Lords",
+    "genero": "Synthwave",
+    "cover": "https://i.scdn.co/image/ab67616d0000b2730ea1ecb2d5271c2db402b0c2",
+    "albuns": [
+      {
+        "id": 4,
+        "nome": "Neon Nights",
+        "cover": "https://i.scdn.co/image/ab67616d0000b273c34064a3c5e4a25892a091f3",
+        "servidor": "YouTube Music",
+        "tracks": [
+          {
+            "id": 5,
+            "title": "Neon Lights",
+            "url": "https://example.com/musica5.mp3"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "nome": "Edu Falaschi",
+    "genero": "Power Metal",
+    "cover": "",
+    "albuns": [
+      {
+        "id": 5,
+        "nome": "Vera Cruz",
+        "cover": "https://dn721602.ca.archive.org/0/items/20250821_20250821_1342/cover.jpg",
+        "servidor": "https://dn721602.ca.archive.org/0/items/20250821_20250821_1342/",
+        "tracks": [
+          {
+            "id": 6,
+            "title": "01 - Burden",
+            "url": "https://dn721602.ca.archive.org/0/items/20250821_20250821_1342/01%20-%20Burden.mp3"
+          },
+          {
+            "id": 7,
+            "title": "02 - The Ancestry",
+            "url": "https://dn721602.ca.archive.org/0/items/20250821_20250821_1342/02%20-%20The%20Ancestry.mp3"
+          },
+          {
+            "id": 8,
+            "title": "03 - Sea of Uncertainties",
+            "url": "https://dn721602.ca.archive.org/0/items/20250821_20250821_1342/03%20-%20Sea%20of%20Uncertainties.mp3"
+          },
+          {
+            "id": 9,
+            "title": "04 - Skies in Your Eyes",
+            "url": "https://dn721602.ca.archive.org/0/items/20250821_20250821_1342/04%20-%20Skies%20in%20Your%20Eyes.mp3"
+          },
+          {
+            "id": 10,
+            "title": "05 - Frol de la Mar",
+            "url": "https://dn721602.ca.archive.org/0/items/20250821_20250821_1342/05%20-%20Frol%20de%20la%20Mar.mp3"
+          },
+          {
+            "id": 11,
+            "title": "06 - Crosses",
+            "url": "https://dn721602.ca.archive.org/0/items/20250821_20250821_1342/06%20-%20Crosses.mp3"
+          },
+          {
+            "id": 12,
+            "title": "07 - Land Ahoy",
+            "url": "https://dn721602.ca.archive.org/0/items/20250821_20250821_1342/07%20-%20Land%20Ahoy.mp3"
+          },
+          {
+            "id": 13,
+            "title": "08 - Fire with Fire",
+            "url": "https://dn721602.ca.archive.org/0/items/20250821_20250821_1342/08%20-%20Fire%20with%20Fire.mp3"
+          },
+          {
+            "id": 14,
+            "title": "09 - Mirror of Delusion",
+            "url": "https://dn721602.ca.archive.org/0/items/20250821_20250821_1342/09%20-%20Mirror%20of%20Delusion.mp3"
+          },
+          {
+            "id": 15,
+            "title": "10 - Bonfire of the Vanities",
+            "url": "https://dn721602.ca.archive.org/0/items/20250821_20250821_1342/10%20-%20Bonfire%20of%20the%20Vanities.mp3"
+          },
+          {
+            "id": 16,
+            "title": "11 - Face of the Storm",
+            "url": "https://dn721602.ca.archive.org/0/items/20250821_20250821_1342/11%20-%20Face%20of%20the%20Storm.mp3"
+          },
+          {
+            "id": 17,
+            "title": "12 - Rainha Do Luar",
+            "url": "https://dn721602.ca.archive.org/0/items/20250821_20250821_1342/12%20-%20Rainha%20Do%20Luar.mp3"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "nome": "Afterglow",
+    "genero": "J-rock, Pop Punk",
+    "cover": "https://i.scdn.co/image/ab6761610000e5eb9199d5f571af125cdeb46f2f",
+    "albuns": [
+      {
+        "id": 6,
+        "nome": "STAY GLOW - CD2",
+        "cover": "https://dn721808.ca.archive.org/0/items/08_20250821_20250821_1315/cover.jpg",
+        "servidor": "https://dn721808.ca.archive.org/0/items/08_20250821_20250821_1315/",
+        "tracks": [
+          {
+            "id": 18,
+            "title": "01 - Crow Song",
+            "url": "https://dn721808.ca.archive.org/0/items/08_20250821_20250821_1315/01%20-%20Crow%20Song.mp3"
+          },
+          {
+            "id": 19,
+            "title": "02 - カサブタ",
+            "url": "https://dn721808.ca.archive.org/0/items/08_20250821_20250821_1315/02%20-%20%E3%82%AB%E3%82%B5%E3%83%96%E3%82%BF.mp3"
+          },
+          {
+            "id": 20,
+            "title": "03 - アイのシナリオ",
+            "url": "https://dn721808.ca.archive.org/0/items/08_20250821_20250821_1315/03%20-%20%E3%82%A2%E3%82%A4%E3%81%AE%E3%82%B7%E3%83%8A%E3%83%AA%E3%82%AA.mp3"
+          },
+          {
+            "id": 21,
+            "title": "04 - Northern lights",
+            "url": "https://dn721808.ca.archive.org/0/items/08_20250821_20250821_1315/04%20-%20Northern%20lights.mp3"
+          },
+          {
+            "id": 22,
+            "title": "05 - トーキョーワンダー。",
+            "url": "https://dn721808.ca.archive.org/0/items/08_20250821_20250821_1315/05%20-%20%E3%83%88%E3%83%BC%E3%82%AD%E3%83%A7%E3%83%BC%E3%83%AF%E3%83%B3%E3%83%80%E3%83%BC%E3%80%82.mp3"
+          },
+          {
+            "id": 23,
+            "title": "06 - Reach Out To The Truth",
+            "url": "https://dn721808.ca.archive.org/0/items/08_20250821_20250821_1315/06%20-%20Reach%20Out%20To%20The%20Truth.mp3"
+          },
+          {
+            "id": 24,
+            "title": "07 - Listen!!",
+            "url": "https://dn721808.ca.archive.org/0/items/08_20250821_20250821_1315/07%20-%20Listen%21%21.mp3"
+          },
+          {
+            "id": 25,
+            "title": "08 - 青い栞",
+            "url": "https://dn721808.ca.archive.org/0/items/08_20250821_20250821_1315/08%20-%20%E9%9D%92%E3%81%84%E6%A0%9E.mp3"
+          },
+          {
+            "id": 26,
+            "title": "09 - イマジネーション",
+            "url": "https://dn721808.ca.archive.org/0/items/08_20250821_20250821_1315/09%20-%20%E3%82%A4%E3%83%9E%E3%82%B8%E3%83%8D%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3.mp3"
+          },
+          {
+            "id": 27,
+            "title": "10 - Butter-Fly",
+            "url": "https://dn721808.ca.archive.org/0/items/08_20250821_20250821_1315/10%20-%20Butter-Fly.mp3"
+          }
+        ]
+      }
+    ]
+  }
+]

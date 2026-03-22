@@ -1,36 +1,22 @@
 const sqlite3 = require("sqlite3").verbose();
 const path = require("path");
-const fs = require("fs");
 const { app } = require("electron");
 
-// Onde ficará o banco em tempo de execução (com permissão de escrita)
-const userDataPath = app.getPath("userData");
-const dbPath = path.join(userDataPath, "musicas.db");
+let dbPath;
 
-// Determinar de onde copiar o banco inicial
-let defaultDbPath;
-
-// Se estamos no modo produção (empacotado)
 if (app.isPackaged) {
-  defaultDbPath = path.join(process.resourcesPath, "db", "musicas.db");
+  // Produção (instalado)
+  dbPath = path.join(app.getPath("userData"), "musicas.db");
 } else {
-  // Dev: pega direto da pasta do projeto
-  defaultDbPath = path.join(__dirname, "../db/musicas.db");
+  // Desenvolvimento (projeto)
+  dbPath = path.join(__dirname, "../db/musicas.db");
 }
 
-// Copiar o banco inicial se não existir ainda
-if (!fs.existsSync(dbPath)) {
-  try {
-    fs.copyFileSync(defaultDbPath, dbPath);
-    console.log("Banco inicial copiado para:", dbPath);
-  } catch (err) {
-    console.error("Erro ao copiar banco inicial:", err);
-  }
-}
+console.log("Banco em uso:", dbPath);
 
 const db = new sqlite3.Database(dbPath, (err) => {
-  if (err) return console.error("Erro ao conectar no SQLite:", err.message);
-  console.log("Conectado ao banco SQLite em:", dbPath);
+  if (err) return console.error("Erro ao conectar:", err.message);
+  console.log("Conectado ao SQLite");
 });
 
 db.run("PRAGMA foreign_keys = ON;");

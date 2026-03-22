@@ -49,29 +49,20 @@ db.serialize(() => {
 
     console.log('Tabelas criadas com sucesso.');
 
-    // Inserindo dados fictícios
+    // Inserindo dados fictícios de teste
     db.run(`INSERT INTO artistas (nome, cover, letra, genero) VALUES 
-        ('The Fictives', 'https://i.scdn.co/image/ab67616d0000b2730ea1ecb2d5271c2db402b0c2', 'T', 'Rock'),
-        ('Average Sevenfold', 'https://i.scdn.co/image/ab67616d0000b2730ea1ecb2d5271c2db402b0c2', 'A', 'Rock'),
-        ('Synth Lords', 'https://i.scdn.co/image/ab67616d0000b2730ea1ecb2d5271c2db402b0c2', 'S', 'Synthwave')
+        ('ARTISTA_TESTE', 'https://i.scdn.co/image/ab67616d0000b2730ea1ecb2d5271c2db402b0c2', 'A', 'Rock')
     `);
 
     db.run(`INSERT INTO albuns (artista_id, nome, cover, genero, servidor) VALUES
-        (1, 'Rocking the World', 'https://i.scdn.co/image/ab67616d0000b273c34064a3c5e4a25892a091f3', 'Rock' , 'Spotify'),
-        (1, 'Acoustic Dreams', 'https://i.scdn.co/image/ab67616d0000b273c34064a3c5e4a25892a091f3', 'Rock' , 'Apple Music'),
-        (2, 'Heavenly Riffs', 'https://i.scdn.co/image/ab67616d0000b273c34064a3c5e4a25892a091f3', 'Rock', 'YouTube Music'),
-        (3, 'Neon Nights', 'https://i.scdn.co/image/ab67616d0000b273c34064a3c5e4a25892a091f3', 'Synthwave', 'YouTube Music')
+        (1, 'ALBUM_TESTE', 'https://i.scdn.co/image/ab67616d0000b273c34064a3c5e4a25892a091f3', 'Rock' , 'Spotify')
     `);
 
     db.run(`INSERT INTO musicas (album_id, nome, url) VALUES
-        (1, 'High Voltage', 'https://example.com/musica1.mp3'),
-        (1, 'Electric Heart', 'https://example.com/musica2.mp3'),
-        (2, 'Soft Strings', 'https://example.com/musica3.mp3'),
-        (3, 'Shining Stars', 'https://example.com/musica4.mp3'),
-        (4, 'Neon Lights', 'https://example.com/musica5.mp3')
+        (1, 'MÚSICA_TESTE', 'https://example.com/musica1.mp3')
     `);
 
-    console.log('Dados fictícios inseridos com sucesso.');
+    console.log('Dados fictícios de teste inseridos com sucesso.');
 });
 
 // Fechando o banco
