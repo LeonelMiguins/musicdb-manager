@@ -1,19 +1,11 @@
 const fs = require("fs");
 const path = require("path");
 const sqlite3 = require("sqlite3").verbose();
-const { app, shell } = require("electron");
 
 async function exportDB() {
 
-  // ✅ Caminho do banco (padronizado)
-  const dbPath = app.isPackaged
-    ? path.join(app.getPath("userData"), "musicas.db")
-    : path.join(__dirname, "../db/musicas.db");
-
-  // ✅ Pasta de saída
-  const outputDir = app.isPackaged
-    ? path.join(app.getPath("userData"), "output")
-    : path.join(__dirname, "../output");
+  const dbPath = path.join(__dirname, "../output/new-database-musicas.db");
+  const outputDir = path.join(__dirname, "../output");
 
   if (!fs.existsSync(outputDir)) {
     fs.mkdirSync(outputDir, { recursive: true });
@@ -40,6 +32,7 @@ async function exportDB() {
       const artistaAlbuns = albuns.filter(
         (album) => album.artista_id === artista.id
       );
+
       return {
         id: artista.id,
         nome: artista.nome,
@@ -49,6 +42,7 @@ async function exportDB() {
           const albumMusicas = musicas.filter(
             (m) => m.album_id === album.id
           );
+
           return {
             id: album.id,
             nome: album.nome,
@@ -64,17 +58,14 @@ async function exportDB() {
       };
     });
 
-    fs.writeFileSync(outputPath, JSON.stringify(exportData, null, 2), "utf-8");
+    fs.writeFileSync(outputPath, JSON.stringify(exportData, null, 2));
+
     db.close();
 
-    shell.showItemInFolder(outputPath);
-
-    console.log(`Exportação concluída! Arquivo em: ${outputPath}`);
     return { success: true, path: outputPath };
 
   } catch (err) {
     db.close();
-    console.error("Erro na exportação:", err.message);
     return { success: false, error: err.message };
   }
 }

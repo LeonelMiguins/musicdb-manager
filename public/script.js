@@ -1,204 +1,408 @@
-const artistasList = document.getElementById('artistas-list');
-const albunsList = document.getElementById('albuns-list');
-const musicasList = document.getElementById('musicas-list');
-const player = document.getElementById('player');
+let tipoModal = null;
+let artistaSelecionado = null;
+let albumSelecionado = null;
+let dadosScraper = null;
+let artistasCache = [];
+let albunsCache = [];
 
-const modalArtista = document.getElementById('modal-artista');
-const modalAlbum = document.getElementById('modal-album');
-const modalMusica = document.getElementById('modal-musica');
+// -------- MODAL --------
+async function abrirModal(tipo) {
+    tipoModal = tipo;
 
-let artistas = [];
-let albuns = [];
-let musicas = [];
+    const modal = document.getElementById('modal');
+    const title = document.getElementById('modalTitle');
+    const body = document.getElementById('modalBody');
 
-// ------------------- MODAIS -------------------
-document.querySelectorAll('.btn-close').forEach(btn => {
-    btn.addEventListener('click', () => {
-        btn.closest('.modal').style.display = 'none';
-    });
-});
+    modal.style.display = 'flex'; 
 
-document.getElementById('btn-open-artista').addEventListener('click', () => modalArtista.style.display = 'block');
-document.getElementById('btn-open-album').addEventListener('click', openModalAlbum);
-document.getElementById('btn-open-musica').addEventListener('click', openModalMusica);
+    
 
-// ------------------- BOTÕES ADICIONAR -------------------
-function getLetraInicial(nome) {
-    if (!nome) return '';
-    return nome.trim().charAt(0).toUpperCase(); // a pega a primeira letra e transforma em maiúscula
+    // -------- ARTISTA --------
+    if (tipo === 'artista') {
+        title.textContent = 'Adicionar Artista';
+        body.innerHTML = `
+            <input id="nome" placeholder="Nome">
+            <input id="cover" placeholder="URL da capa">
+            <input id="genero" placeholder="Gênero">
+        `;
+    }
+
+    // -------- ALBUM --------
+    if (tipo === 'album') {
+        title.textContent = 'Adicionar Álbum';
+
+        body.innerHTML = `
+            <input id="buscaArtista" placeholder="Buscar artista...">
+            <ul id="listaBusca"></ul>
+
+            <input id="artistaId" placeholder="ID do artista" readonly>
+
+            <input id="nome" placeholder="Nome do álbum">
+            <input id="cover" placeholder="Cover">
+            <input id="genero" placeholder="Gênero">
+            <input id="servidor" placeholder="Servidor">
+        `;
+
+        carregarBuscaArtistas();
+    }
+
+    // -------- MUSICA --------
+    if (tipo === 'musica') {
+        title.textContent = 'Adicionar Música';
+
+        body.innerHTML = `
+            <input id="buscaAlbum" placeholder="Buscar álbum...">
+            <ul id="listaBuscaAlbum"></ul>
+
+            <input id="albumId" placeholder="ID do álbum" readonly>
+
+            <input id="nome" placeholder="Nome">
+            <input id="url" placeholder="URL">
+        `;
+
+        carregarBuscaAlbuns();
+    }
+
+    // -------- SCRAPER --------
+else if (tipo === 'scraper') {
+    title.textContent = 'Importar do Internet Archive';
+
+    body.innerHTML = `
+        <input id="url" placeholder="Cole a URL do álbum">
+
+        <button onclick="buscarScraper()">Buscar</button>
+
+        <hr>
+
+        <input id="buscaArtista" placeholder="Buscar artista...">
+        <ul id="listaBusca"></ul>
+
+        <input id="artistaId" placeholder="ID do artista" readonly>
+
+        <hr>
+
+        <div id="preview"></div>
+    `;
+
+    carregarBuscaArtistas();
 }
 
-document.getElementById('btn-add-artista').addEventListener('click', async () => {
-    const nome = document.getElementById('input-artista-nome').value.trim();
-    const genero = document.getElementById('input-artista-genero').value.trim();
-    const cover = document.getElementById('input-artista-capa').value.trim();
-    const letra = getLetraInicial(nome);
-
-    if (!nome) return alert('Digite o nome do artista!');
-
-    await window.api.addArtista({ nome, genero, cover, letra });
-    modalArtista.style.display = 'none';
-    loadArtistas();
-});
-
-document.getElementById('btn-add-album').addEventListener('click', async () => {
-    const nome = document.getElementById('input-album-nome').value.trim();
-    const cover = document.getElementById('input-album-capa').value.trim();
-    const artista_id = document.getElementById('select-album-artista').value;
-    const servidor = document.getElementById('input-album-servidor').value.trim();
-    if (!nome || !artista_id) return alert('Preencha o nome e selecione o artista!');
-
-    await window.api.addAlbum({ nome, cover, artista_id, servidor });
-    modalAlbum.style.display = 'none';
-    loadAlbuns(parseInt(artista_id));
-});
-
-document.getElementById('btn-add-musica').addEventListener('click', async () => {
-    const nome = document.getElementById('input-musica-nome').value.trim();
-    const url = document.getElementById('input-musica-url').value.trim();
-    const album_id = document.getElementById('select-musica-album').value;
-
-    if (!nome || !url || !album_id) return alert('Preencha nome, link e selecione o álbum!');
-
-    await window.api.addMusica({ nome, url, album_id });
-    modalMusica.style.display = 'none';
-    loadMusicas(parseInt(album_id));
-});
-
-document.getElementById('btn-export-db').addEventListener('click', async () => {
-    const result = await window.api.exportDBJson();
-    if (result.success) {
-        alert(`Exportação concluída! Arquivo gerado em:\n${result.path}`);
-    } else {
-        alert(`Erro ao exportar banco:\n${result.error}`);
-    }
-});
-
-document.getElementById('btn-export-db-letters').addEventListener('click', async () => {
-    const result = await window.api.exportDBByLetter();
-    if (result.success) {
-        alert(`Exportação concluída! Arquivo gerado em:\n${result.path}`);
-    } else {
-        alert(`Erro ao exportar banco:\n${result.error}`);
-    }
-});
-
-
-// ------------------- CARREGAR E RENDERIZAR -------------------
-async function loadArtistas() {
-    artistas = await window.api.fetchArtistas();
-    renderArtistas();
 }
 
-function renderArtistas() {
-    artistasList.innerHTML = '';
-    artistas.forEach(a => {
-        const div = document.createElement('div');
-        div.classList.add('card');
-        div.innerHTML = `${a.nome} <strong>[Id: ${a.id}]</strong>`;
-        div.addEventListener('click', () => {
-            localStorage.setItem('selectedArtistaId', a.id);
-            loadAlbuns(a.id);
+function fecharModal() {
+    document.getElementById('modal').style.display = 'none';
+}
+
+// -------- SALVAR --------
+async function salvarModal() {
+
+    // -------- ARTISTA --------
+    if (tipoModal === 'artista') {
+        const nome = document.getElementById('nome').value;
+        const cover = document.getElementById('cover').value;
+        const genero = document.getElementById('genero').value;
+
+        const letra = nome.charAt(0).toUpperCase();
+
+        await fetch('/api/artistas', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ nome, cover, genero, letra })
         });
-        artistasList.appendChild(div);
+
+        loadArtistas();
+    }
+
+    // -------- ALBUM --------
+    if (tipoModal === 'album') {
+        const nome = document.getElementById('nome').value;
+        const artista_id = document.getElementById('artistaId').value;
+        const cover = document.getElementById('cover').value;
+        const genero = document.getElementById('genero').value;
+        const servidor = document.getElementById('servidor').value;
+
+        await fetch('/api/albuns', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                nome,
+                artista_id,
+                cover,
+                genero,
+                servidor
+            })
+        });
+
+        loadArtistas();
+    }
+
+    // -------- MUSICA --------
+    if (tipoModal === 'musica') {
+        const nome = document.getElementById('nome').value;
+        const url = document.getElementById('url').value;
+        const album_id = document.getElementById('albumId').value;
+
+        await fetch('/api/musicas', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                nome,
+                url,
+                album_id
+            })
+        });
+
+        loadArtistas();
+    }
+
+    fecharModal();
+}
+
+// -------- LISTAGEM --------
+async function loadArtistas() {
+    const res = await fetch('/api/artistas');
+    artistasCache = await res.json();
+
+    renderArtistas(artistasCache);
+}
+
+function renderArtistas(listaData) {
+    const lista = document.getElementById('listaArtistas');
+    lista.innerHTML = '';
+
+    listaData.forEach(a => {
+        const li = document.createElement('li');
+        li.textContent = `${a.nome} (ID: ${a.id})`;
+
+        li.onclick = () => {
+            artistaSelecionado = a.id;
+            loadAlbuns(a.id);
+        };
+
+        lista.appendChild(li);
     });
 }
 
 async function loadAlbuns(artistaId) {
-    const allAlbuns = await window.api.fetchAlbuns();
-    albuns = allAlbuns.filter(a => a.artista_id === artistaId);
-    renderAlbuns();
-    musicasList.innerHTML = '';
+    const res = await fetch('/api/albuns');
+    albunsCache = await res.json();
+
+    const filtrados = albunsCache.filter(a => a.artista_id == artistaId);
+    renderAlbuns(filtrados);
 }
 
-function renderAlbuns() {
-    albunsList.innerHTML = '';
-    albuns.forEach(a => {
-        const div = document.createElement('div');
-        div.classList.add('card');
-        div.innerHTML = `<img src="${a.cover}" alt="${a.nome}"><div>${a.nome}</div>`;
-        div.addEventListener('click', () => {
-            localStorage.setItem('selectedAlbumId', a.id);
-            localStorage.setItem('selectedArtistaId', a.artista_id);
+function renderAlbuns(listaData) {
+    const lista = document.getElementById('listaAlbuns');
+    lista.innerHTML = '';
+
+    listaData.forEach(a => {
+        const li = document.createElement('li');
+
+        li.innerHTML = `
+            <div class="album-item">
+                <img src="${a.cover || 'https://i.scdn.co/image/ab67616d00001e0235eeb40f2fa70b35d9c48ece'}" />
+                <span>${a.nome}</span>
+            </div>
+        `;
+
+        li.onclick = () => {
+            albumSelecionado = a.id;
             loadMusicas(a.id);
-        });
-        albunsList.appendChild(div);
+        };
+
+        lista.appendChild(li);
     });
+}
+
+function filtrar() {
+    const termo = document.getElementById('search').value.toLowerCase();
+
+    // filtrar artistas
+    const artistasFiltrados = artistasCache.filter(a =>
+        a.nome.toLowerCase().includes(termo)
+    );
+
+    renderArtistas(artistasFiltrados);
+
+    // filtrar álbuns também
+    const albunsFiltrados = albunsCache.filter(a =>
+        a.nome.toLowerCase().includes(termo)
+    );
+
+    renderAlbuns(albunsFiltrados);
 }
 
 async function loadMusicas(albumId) {
-    const allMusicas = await window.api.fetchMusicas();
-    musicas = allMusicas.filter(m => m.album_id === albumId);
-    renderMusicas();
-}
+    const res = await fetch('/api/musicas');
+    const musicas = await res.json();
 
-function renderMusicas() {
-    musicasList.innerHTML = '';
-    musicas.forEach(m => {
-        const li = document.createElement('li');
-        li.textContent = m.nome;
-        li.addEventListener('click', () => {
-            player.pause();
-            player.src = m.url;
-            player.play();
+    const lista = document.getElementById('listaMusicas');
+    lista.innerHTML = '';
+
+    musicas
+        .filter(m => m.album_id == albumId)
+        .forEach(m => {
+            const li = document.createElement('li');
+            li.textContent = m.nome;
+
+            li.onclick = () => new Audio(m.url).play();
+
+            lista.appendChild(li);
         });
-        musicasList.appendChild(li);
+}
+
+async function carregarBuscaArtistas() {
+    const res = await fetch('/api/artistas');
+    const artistas = await res.json();
+
+    const input = document.getElementById('buscaArtista');
+    const lista = document.getElementById('listaBusca');
+
+    input.addEventListener('input', () => {
+        const valor = input.value.toLowerCase();
+        lista.innerHTML = '';
+
+        artistas
+            .filter(a => a.nome.toLowerCase().includes(valor))
+            .forEach(a => {
+                const li = document.createElement('li');
+                li.textContent = `${a.nome} (ID: ${a.id})`;
+
+                li.onclick = () => {
+                    document.getElementById('artistaId').value = a.id;
+                    lista.innerHTML = '';
+                    input.value = a.nome;
+                };
+
+                lista.appendChild(li);
+            });
     });
 }
 
-// ------------------- MODAIS COM SELEÇÃO AUTOMÁTICA -------------------
-function openModalAlbum() {
-    const select = document.getElementById('select-album-artista');
-    select.innerHTML = '';
-    artistas.forEach(a => {
-        const option = document.createElement('option');
-        option.value = a.id;
-        option.textContent = a.nome;
-        if (localStorage.getItem('selectedArtistaId') == a.id) option.selected = true;
-        select.appendChild(option);
+async function carregarBuscaAlbuns() {
+    const res = await fetch('/api/albuns');
+    const albuns = await res.json();
+
+    const input = document.getElementById('buscaAlbum');
+    const lista = document.getElementById('listaBuscaAlbum');
+
+    input.addEventListener('input', () => {
+        const valor = input.value.toLowerCase();
+        lista.innerHTML = '';
+
+        albuns
+            .filter(a => a.nome.toLowerCase().includes(valor))
+            .forEach(a => {
+                const li = document.createElement('li');
+                li.textContent = `${a.nome} (ID: ${a.id})`;
+
+                li.onclick = () => {
+                    document.getElementById('albumId').value = a.id;
+                    lista.innerHTML = '';
+                    input.value = a.nome;
+                };
+
+                lista.appendChild(li);
+            });
     });
-    modalAlbum.style.display = 'block';
 }
 
-function openModalMusica() {
-    const select = document.getElementById('select-musica-album');
-    select.innerHTML = '';
-    window.api.fetchAlbuns().then(allAlbuns => {
-        allAlbuns.forEach(a => {
-            const option = document.createElement('option');
-            option.value = a.id;
-            option.textContent = a.nome;
-            if (localStorage.getItem('selectedAlbumId') == a.id) option.selected = true;
-            select.appendChild(option);
+async function exportar() {
+    const res = await fetch('/api/export');
+    const data = await res.json();
+
+    if (data.success) {
+        alert('Exportado com sucesso!\n' + data.path);
+    } else {
+        alert('Erro: ' + data.error);
+    }
+}
+
+async function buscarScraper() {
+    const url = document.getElementById('url').value;
+
+    const res = await fetch('/api/scraper', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url })
+    });
+
+    const data = await res.json();
+    dadosScraper = data;
+
+    renderPreview(data);
+}
+
+function renderPreview(data) {
+    const div = document.getElementById('preview');
+
+    if (!data) {
+        div.innerHTML = 'Erro ao carregar';
+        return;
+    }
+
+    div.innerHTML = `
+        <h3>Preview</h3>
+        <img src="${data.cover || ''}" width="120"><br><br>
+
+        <strong>${data.tracks.length} músicas encontradas</strong>
+
+        <ul style="max-height:150px; overflow:auto;">
+            ${data.tracks.map(t => `<li>${t.title}</li>`).join('')}
+        </ul>
+
+        <button onclick="salvarScraper()">Salvar no banco</button>
+    `;
+}
+
+async function salvarScraper() {
+    if (!dadosScraper) return alert('Nenhum dado carregado');
+
+    const artista_id = document.getElementById('artistaId').value;
+
+    if (!artista_id) {
+        return alert('Selecione um artista!');
+    }
+
+    // 🔥 nome automático do álbum (melhorado)
+    const nomeAlbum = dadosScraper.album
+        .split('/')
+        .filter(Boolean)
+        .pop();
+
+    // 1. cria álbum
+    const albumRes = await fetch('/api/albuns', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            nome: nomeAlbum,
+            artista_id,
+            cover: dadosScraper.cover,
+            genero: '',
+            servidor: 'Internet Archive'
+        })
+    });
+
+    const album = await albumRes.json();
+    const albumId = album.id;
+
+    // 2. cria músicas
+    for (const track of dadosScraper.tracks) {
+        await fetch('/api/musicas', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                nome: track.title,
+                url: track.url,
+                album_id: albumId
+            })
         });
-        modalMusica.style.display = 'block';
-    });
+    }
+
+    alert('Importado com sucesso!');
+    fecharModal();
+    loadArtistas();
 }
 
-const modalInfo = document.getElementById('modal-info');
-const infoArtistas = document.getElementById('info-artistas');
-const infoAlbuns = document.getElementById('info-albuns');
-const infoMusicas = document.getElementById('info-musicas');
-
-// Abrir modal ao clicar no botão
-document.getElementById('btn-open-info').addEventListener('click', async () => {
-    const artistas = await window.api.fetchArtistas();
-    const albuns = await window.api.fetchAlbuns();
-    const musicas = await window.api.fetchMusicas();
-
-    infoArtistas.textContent = `Total de artistas: ${artistas.length}`;
-    infoAlbuns.textContent = `Total de álbuns: ${albuns.length}`;
-    infoMusicas.textContent = `Total de músicas: ${musicas.length}`;
-
-    modalInfo.style.display = 'block';
-});
-
-// Fechar modal
-modalInfo.querySelector('.btn-close').addEventListener('click', () => {
-    modalInfo.style.display = 'none';
-});
-
-
-
-// ------------------- INICIALIZAÇÃO -------------------
+// INIT
 loadArtistas();

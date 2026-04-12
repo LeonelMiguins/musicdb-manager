@@ -1,26 +1,18 @@
-# Dependências
+# Node modules
 node_modules/
 
-# Builds e distribuições
-dist/
-#out/
-#build/
-#release/
-win-unpacked/
-
-# Logs
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# Ambiente
+# Arquivos de ambiente
 .env
-.DS_Store
+.env.*
 
-# VSCode / IDE
+# Build / dist
+dist/
+build/
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# IDEs / editores
 .vscode/
 .idea/
-
-# Cache
-*.log
-.cache/

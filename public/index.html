@@ -1,122 +1,221 @@
 <!DOCTYPE html>
-<html lang="pt-br">
-
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>musicdb-manager V 1.0.0 - by Leonel Miguins</title>
-    <link rel="stylesheet" href="style.css">
-    <icon rel="icon" href="img/icon.ico" type="image/x-icon">
-</head>
+    <title>Music App</title>
+ <style>
+body {
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    background: #121212;
+    color: #eee;
+}
 
+/* MENU */
+.menu {
+    background: #1f1f1f;
+    padding: 12px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    border-bottom: 1px solid #333;
+}
+
+.menu button {
+    background: #2a2a2a;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: 0.2s;
+}
+
+.menu button:hover {
+    background: #444;
+}
+
+/* SEARCH */
+.search-container {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+#search {
+    width: 100%;
+    max-width: 500px;
+    height: 45px;
+    font-size: 16px;
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    background: #2a2a2a;
+    color: white;
+}
+
+/* 🔥 LAYOUT PRINCIPAL (FALTAVA ISSO) */
+.container {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+}
+
+/* BOX */
+.box {
+    flex: 1; /* 🔥 resolve o problema de quebra */
+    min-width: 0;
+    background: #1c1c1c;
+    padding: 15px;
+    border-radius: 10px;
+    height: 80vh;
+    overflow-y: auto;
+}
+
+/* TITULO */
+h2 {
+    margin-top: 0;
+}
+
+/* LISTA */
+li {
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 6px;
+    margin-bottom: 5px;
+    transition: 0.2s;
+}
+
+li:hover {
+    background: #2a2a2a;
+}
+
+/* ALBUM CARD */
+.album-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.album-item img {
+    width: 100px;  /* 🔥 antes tava gigante */
+    height: 100px;
+    border-radius: 6px;
+    object-fit: cover;
+}
+
+/* MODAL */
+.modal {
+    display: none; /* 🔥 CORRETO */
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.7);
+
+    align-items: center;
+    justify-content: center;
+}
+
+/* CONTEÚDO */
+.modal-content {
+    background: #1e1e1e;
+    padding: 20px;
+    width: 400px;
+    max-height: 80vh;
+    overflow-y: auto;
+    border-radius: 10px;
+}
+
+/* INPUT */
+input {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 8px;
+    border: none;
+    border-radius: 5px;
+    background: #2a2a2a;
+    color: white;
+}
+
+/* BOTÕES MODAL */
+.modal-content button {
+    width: 100%;
+    margin-top: 5px;
+    padding: 10px;
+    border: none;
+    background: #3a3a3a;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.modal-content button:hover {
+    background: #555;
+}
+
+/* LISTA BUSCA */
+#listaBusca li,
+#listaBuscaAlbum li {
+    background: #2a2a2a;
+}
+
+/* SCROLL */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #444;
+    border-radius: 10px;
+}
+</style>
+</head>
 <body>
 
-    <div class="top-buttons">
-        <div class="top-logo">
-            <img src="img/icon.png" alt="Icon" class="app-icon" width="32" height="32">
-            <a>musicdb-manager</h4>
-        </div>
-        <br>
-        <button id="btn-open-artista">Adicionar Artista</button>
-        <button id="btn-open-album">Adicionar Álbum</button>
-        <button id="btn-open-musica">Adicionar Música</button>
-        <button id="btn-open-scraper" onclick="window.location.href='scraper.html'">Abrir Scraper</button>
-        <button id="btn-open-info">Informações Detalhadas</button>
-        <button id="btn-export-db">Exportar Banco (.json)</button>
-        <button id="btn-export-db-letters">Exportar Banco (Letras) (.json)</button>
+<!-- MENU -->
+<div class="menu">
+    <button onclick="abrirModal('artista')">Add Artista</button>
+    <button onclick="abrirModal('album')">Add Álbum</button>
+    <button onclick="abrirModal('musica')">Add Música</button>
+    <button onclick="exportar()">Exportar JSON</button>
+    <button onclick="abrirModal('scraper')">Importar Archive</button>
+</div>
+<div class="search-container">
+    <input 
+        id="search"
+        placeholder="Buscar artista ou álbum..."
+        oninput="filtrar()"
+    >
+</div>
+
+<div class="container">
+    <div class="box">
+        <h2>Artistas</h2>
+        <ul id="listaArtistas"></ul>
     </div>
 
-    <div class="container-horizontal">
-        <!-- Artistas -->
-        <div class="section" id="section-artistas">
-            <h2>Artistas</h2>
-            <div id="artistas-list" class="cards-container"></div>
-        </div>
-
-        <!-- Álbuns -->
-        <div class="section" id="section-albuns">
-            <h2 id="section-albuns-info">Álbuns</h2>
-            <div id="albuns-list" class="cards-container"></div>
-        </div>
-
-        <!-- Músicas -->
-        <div class="section" id="section-musicas">
-            <h2>Músicas</h2>
-            <ul id="musicas-list"></ul>
-        </div>
+    <div class="box">
+        <h2>Álbuns</h2>
+        <ul id="listaAlbuns"></ul>
     </div>
 
-    <!-- Player oculto -->
-    <audio id="player" hidden></audio>
-
-    <!-- Modal Adicionar Artista -->
-    <div class="modal" id="modal-artista">
-        <div class="modal-content">
-            <h3>Adicionar Artista</h3>
-            <label>Nome:</label>
-            <input type="text" id="input-artista-nome">
-            <label>Gênero:</label>
-            <input type="text" id="input-artista-genero">
-            <label>Capa (URL):</label>
-            <input type="text" id="input-artista-capa">
-            <div class="modal-buttons">
-                <button id="btn-add-artista">Adicionar</button>
-                <button class="btn-close">Cancelar</button>
-            </div>
-        </div>
+    <div class="box">
+        <h2>Músicas</h2>
+        <ul id="listaMusicas"></ul>
     </div>
+</div>
 
-    <!-- Modal Adicionar Álbum -->
-    <div class="modal" id="modal-album">
-        <div class="modal-content">
-            <h3>Adicionar Álbum</h3>
-            <label>Nome do Álbum:</label>
-            <input type="text" id="input-album-nome">
-            <label>Capa (URL):</label>
-            <input type="text" id="input-album-capa">
-            <label>Artista:</label>
-            <select id="select-album-artista"></select>
-            <label>Servidor:</label>
-            <input type="text" id="input-album-servidor">
-            <div class="modal-buttons">
-                <button id="btn-add-album">Adicionar</button>
-                <button class="btn-close">Cancelar</button>
-            </div>
-        </div>
+<!-- MODAL -->
+<div id="modal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <h3 id="modalTitle"></h3>
+
+        <div id="modalBody"></div>
+
+        <button onclick="salvarModal()">Salvar</button>
+        <button onclick="fecharModal()">Fechar</button>
     </div>
+</div>
 
-    <!-- Modal Adicionar Música -->
-    <div class="modal" id="modal-musica">
-        <div class="modal-content">
-            <h3>Adicionar Música</h3>
-            <label>Nome da Música:</label>
-            <input type="text" id="input-musica-nome">
-            <label>URL:</label>
-            <input type="text" id="input-musica-url">
-            <label>Álbum:</label>
-            <select id="select-musica-album"></select>
-            <div class="modal-buttons">
-                <button id="btn-add-musica">Adicionar</button>
-                <button class="btn-close">Cancelar</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal Informações Detalhadas -->
-    <div class="modal" id="modal-info">
-        <div class="modal-content">
-            <h3>Informações Detalhadas</h3>
-            <p id="info-artistas"></p>
-            <p id="info-albuns"></p>
-            <p id="info-musicas"></p>
-            <div class="modal-buttons">
-                <button class="btn-close">Fechar</button>
-            </div>
-        </div>
-    </div>
-
-
-    <script src="script.js"></script>
-
+<script src="script.js"></script>
 </body>
-
 </html>
