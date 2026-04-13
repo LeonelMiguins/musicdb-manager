@@ -68,21 +68,24 @@ else if (tipo === 'scraper') {
     title.textContent = 'Importar do Internet Archive';
 
     body.innerHTML = `
-        <input id="url" placeholder="Cole a URL do álbum">
+    <input id="url" placeholder="Cole a URL do álbum">
 
-        <button onclick="buscarScraper()">Buscar</button>
+    <button onclick="buscarScraper()">Buscar</button>
 
-        <hr>
+    <hr>
 
-        <input id="buscaArtista" placeholder="Buscar artista...">
-        <ul id="listaBusca"></ul>
+    <!-- 🔥 NOVO CAMPO -->
+    <input id="nomeAlbum" placeholder="Nome do álbum">
 
-        <input id="artistaId" placeholder="ID do artista" readonly>
+    <input id="buscaArtista" placeholder="Buscar artista...">
+    <ul id="listaBusca"></ul>
 
-        <hr>
+    <input id="artistaId" placeholder="ID do artista" readonly>
 
-        <div id="preview"></div>
-    `;
+    <hr>
+
+    <div id="preview"></div>
+`;
 
     carregarBuscaArtistas();
 }
@@ -364,8 +367,10 @@ async function salvarScraper() {
         return alert('Selecione um artista!');
     }
 
-    // 🔥 nome automático do álbum (melhorado)
-    const nomeAlbum = dadosScraper.album
+    // 🔥 pega nome digitado OU automático
+    const nomeDigitado = document.getElementById('nomeAlbum').value;
+
+    const nomeAlbum = nomeDigitado || dadosScraper.album
         .split('/')
         .filter(Boolean)
         .pop();
@@ -403,6 +408,5 @@ async function salvarScraper() {
     fecharModal();
     loadArtistas();
 }
-
 // INIT
 loadArtistas();
