@@ -22,3 +22,16 @@ exports.addArtista = (artista) => {
         );
     });
 };
+
+exports.deleteArtista = (id) => {
+    return new Promise((resolve, reject) => {
+        db.run(
+            "DELETE FROM artistas WHERE id = ?",
+            [id],
+            function (err) {
+                if (err) reject(err);
+                else resolve({ success: true });
+            }
+        );
+    });
+};

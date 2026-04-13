@@ -175,15 +175,40 @@ function renderArtistas(listaData) {
 
     listaData.forEach(a => {
         const li = document.createElement('li');
-        li.textContent = `${a.nome} (ID: ${a.id})`;
 
-        li.onclick = () => {
+        li.innerHTML = `
+            <div class="item-row">
+                <span>${a.nome} (ID: ${a.id})</span>
+                <button class="btn-delete" onclick="deletarArtista(${a.id})">
+                    🗑️
+                </button>
+            </div>
+        `;
+
+        li.onclick = (e) => {
+            if (e.target.closest('.btn-delete')) return;
+
             artistaSelecionado = a.id;
             loadAlbuns(a.id);
         };
 
         lista.appendChild(li);
     });
+}
+
+async function deletarArtista(id) {
+    const confirmar = confirm('🗑️ Excluir artista e TODOS os dados relacionados?');
+
+    if (!confirmar) return;
+
+    await fetch(`/api/artistas/${id}`, {
+        method: 'DELETE'
+    });
+
+    document.getElementById('listaAlbuns').innerHTML = '';
+    document.getElementById('listaMusicas').innerHTML = '';
+
+    loadArtistas();
 }
 
 async function loadAlbuns(artistaId) {
