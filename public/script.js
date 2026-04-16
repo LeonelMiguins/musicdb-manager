@@ -13,21 +13,21 @@ async function abrirModal(tipo) {
     const title = document.getElementById('modalTitle');
     const body = document.getElementById('modalBody');
 
-    modal.style.display = 'flex'; 
+    modal.style.display = 'flex';
 
-    
+
 
     // -------- ARTISTA --------
-if (tipo === 'artista') {
-    title.textContent = 'Adicionar Artista';
+    if (tipo === 'artista') {
+        title.textContent = 'Adicionar Artista';
 
-    body.innerHTML = `
+        body.innerHTML = `
         <input id="nome" placeholder="Nome">
         <input id="cover" placeholder="URL da capa">
         <input id="genero" placeholder="Gênero">
         <textarea id="descricao" placeholder="Descrição do artista" rows="3"></textarea>
     `;
-}
+    }
 
     // -------- ALBUM --------
     if (tipo === 'album') {
@@ -67,18 +67,18 @@ if (tipo === 'artista') {
     }
 
     // -------- SCRAPER --------
-else if (tipo === 'scraper') {
-    title.textContent = 'Importar do Internet Archive';
+    else if (tipo === 'scraper') {
+        title.textContent = 'Importar do Internet Archive';
 
-    body.innerHTML = `
+        body.innerHTML = `
     <input id="url" placeholder="Cole a URL do álbum">
 
     <button onclick="buscarScraper()">Buscar</button>
 
     <hr>
 
-    <!-- 🔥 NOVO CAMPO -->
     <input id="nomeAlbum" placeholder="Nome do álbum">
+    <input id="anoAlbum" placeholder="Ano (ex: 2024)"> <!-- 🔥 NOVO -->
 
     <input id="buscaArtista" placeholder="Buscar artista...">
     <ul id="listaBusca"></ul>
@@ -90,8 +90,8 @@ else if (tipo === 'scraper') {
     <div id="preview"></div>
 `;
 
-    carregarBuscaArtistas();
-}
+        carregarBuscaArtistas();
+    }
 
 }
 
@@ -261,6 +261,7 @@ function renderAlbuns(listaData) {
     });
 }
 
+// funçao para filtrar albuns e artistas por pesquisa
 function filtrar() {
     const termo = document.getElementById('search').value.toLowerCase();
 
@@ -411,15 +412,14 @@ async function salvarScraper() {
         return alert('Selecione um artista!');
     }
 
-    // 🔥 pega nome digitado OU automático
     const nomeDigitado = document.getElementById('nomeAlbum').value;
+    const ano = document.getElementById('anoAlbum').value;
 
     const nomeAlbum = nomeDigitado || dadosScraper.album
         .split('/')
         .filter(Boolean)
         .pop();
 
-    // 1. cria álbum
     const albumRes = await fetch('/api/albuns', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -428,6 +428,7 @@ async function salvarScraper() {
             artista_id,
             cover: dadosScraper.cover,
             genero: '',
+            ano,
             servidor: 'Internet Archive'
         })
     });
@@ -435,7 +436,6 @@ async function salvarScraper() {
     const album = await albumRes.json();
     const albumId = album.id;
 
-    // 2. cria músicas
     for (const track of dadosScraper.tracks) {
         await fetch('/api/musicas', {
             method: 'POST',
@@ -452,5 +452,7 @@ async function salvarScraper() {
     fecharModal();
     loadArtistas();
 }
+
+
 // INIT
 loadArtistas();

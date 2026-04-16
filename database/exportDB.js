@@ -41,7 +41,7 @@ async function exportDB() {
         nome: artista.nome,
         genero: artista.genero,
         cover: artista.cover,
-        descricao: artista.descricao, // 🔥 NOVO
+        descricao: artista.descricao,
 
         albuns: artistaAlbuns.map((album) => {
           const albumMusicas = musicas.filter(
@@ -54,13 +54,13 @@ async function exportDB() {
             cover: album.cover,
             genero: album.genero,
             servidor: album.servidor,
-            ano: album.ano, // 🔥 NOVO
+            ano: album.ano,
 
             tracks: albumMusicas.map((m) => ({
               id: m.id,
               title: m.nome,
-              url: m.url,
-            })),
+              url: m.url
+            }))
           };
         }),
       };
@@ -95,7 +95,8 @@ async function exportDB() {
       playlists: playlistsFormatadas
     };
 
-    fs.writeFileSync(outputPath, JSON.stringify(exportData, null, 2));
+    // 🔥 AQUI A MÁGICA (COMPACTO)
+    fs.writeFileSync(outputPath, formatCompact(exportData));
 
     db.close();
 
@@ -106,5 +107,40 @@ async function exportDB() {
     return { success: false, error: err.message };
   }
 }
+
+function formatCompact(obj, level = 0) {
+  const indent = '  '.repeat(level);
+
+  if (Array.isArray(obj)) {
+    if (obj.length === 0) return '[]';
+
+    return `[\n${obj.map(item =>
+      indent + '  ' + formatCompact(item, level + 1)
+    ).join(',\n')}\n${indent}]`;
+  }
+
+  if (typeof obj === 'object' && obj !== null) {
+    const entries = Object.entries(obj);
+
+    // 🔥 tudo na mesma linha (se for objeto simples)
+    const simple = entries.every(([_, v]) =>
+      typeof v !== 'object' || v === null
+    );
+
+    if (simple) {
+      return `{ ${entries.map(([k, v]) =>
+        `"${k}": ${JSON.stringify(v)}`
+      ).join(', ')} }`;
+    }
+
+    // 🔥 objetos complexos (com arrays dentro)
+    return `{\n${entries.map(([k, v]) =>
+      `${indent}  "${k}": ${formatCompact(v, level + 1)}`
+    ).join(',\n')}\n${indent}}`;
+  }
+
+  return JSON.stringify(obj);
+}
+
 
 module.exports = exportDB;

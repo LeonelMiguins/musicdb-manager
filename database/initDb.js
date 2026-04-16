@@ -83,12 +83,12 @@ function initDatabase() {
             // -------- DADOS DE TESTE --------
             db.run(`
                 INSERT INTO artistas (nome, cover, letra, genero, descricao)
-                VALUES ('ARTISTA_TESTE', '', 'A', 'Rock', 'Artista de teste')
+                VALUES ('ARTISTA_TESTE', 'https://cdn-images.dzcdn.net/images/cover/6a2c6cefc9642cf85ebd401b90047ec6/500x500-000000-80-0-0.jpg', 'A', 'Rock', 'Artista de teste')
             `);
 
             db.run(`
                 INSERT INTO albuns (artista_id, nome, cover, genero, servidor, ano)
-                VALUES (1, 'ALBUM_TESTE', '', 'Rock', 'Spotify', '2024')
+                VALUES (1, 'ALBUM_TESTE', 'https://cdn-images.dzcdn.net/images/cover/6a2c6cefc9642cf85ebd401b90047ec6/500x500-000000-80-0-0.jpg', 'Rock', 'Spotify', '2024')
             `);
 
             db.run(`

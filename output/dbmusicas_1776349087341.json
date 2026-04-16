@@ -1,0 +1,50 @@
+{
+  "artistas": [
+    {
+      "id": 1,
+      "nome": "ARTISTA_TESTE",
+      "genero": "Rock",
+      "cover": "https://cdn-images.dzcdn.net/images/cover/6a2c6cefc9642cf85ebd401b90047ec6/500x500-000000-80-0-0.jpg",
+      "descricao": "Artista de teste",
+      "albuns": [
+        {
+          "id": 1,
+          "nome": "ALBUM_TESTE",
+          "cover": "https://cdn-images.dzcdn.net/images/cover/6a2c6cefc9642cf85ebd401b90047ec6/500x500-000000-80-0-0.jpg",
+          "genero": "Rock",
+          "servidor": "Spotify",
+          "ano": "2024",
+          "tracks": [
+            { "id": 1, "title": "MUSICA_TESTE", "url": "https://example.com/teste.mp3" }
+          ]
+        },
+        {
+          "id": 2,
+          "nome": "dsdsdsdssd",
+          "cover": "https://dn720708.ca.archive.org/0/items/satellite-lovers-sons-of-1973_202508/cover.jpg",
+          "genero": "",
+          "servidor": "Internet Archive",
+          "ano": null,
+          "tracks": [
+            { "id": 2, "title": "01 - Best Friend", "url": "https://dn720708.ca.archive.org/0/items/satellite-lovers-sons-of-1973_202508/01%20-%20Best%20Friend.mp3" },
+            { "id": 3, "title": "02 - 夏の続き", "url": "https://dn720708.ca.archive.org/0/items/satellite-lovers-sons-of-1973_202508/02%20-%20%E5%A4%8F%E3%81%AE%E7%B6%9A%E3%81%8D.mp3" },
+            { "id": 4, "title": "03 - How Much I Love You, Baby", "url": "https://dn720708.ca.archive.org/0/items/satellite-lovers-sons-of-1973_202508/03%20-%20How%20Much%20I%20Love%20You%2C%20Baby.mp3" },
+            { "id": 5, "title": "04 - Sunnyday, Holiday", "url": "https://dn720708.ca.archive.org/0/items/satellite-lovers-sons-of-1973_202508/04%20-%20Sunnyday%2C%20Holiday.mp3" },
+            { "id": 6, "title": "05 - 空へ (S.L meets HV!)", "url": "https://dn720708.ca.archive.org/0/items/satellite-lovers-sons-of-1973_202508/05%20-%20%E7%A9%BA%E3%81%B8%20%28S.L%20meets%20HV%21%29.mp3" },
+            { "id": 7, "title": "06 - 外はいい天気", "url": "https://dn720708.ca.archive.org/0/items/satellite-lovers-sons-of-1973_202508/06%20-%20%E5%A4%96%E3%81%AF%E3%81%84%E3%81%84%E5%A4%A9%E6%B0%97.mp3" },
+            { "id": 8, "title": "07 - Sunshine Love (Lover_s Picnic Version)", "url": "https://dn720708.ca.archive.org/0/items/satellite-lovers-sons-of-1973_202508/07%20-%20Sunshine%20Love%20%28Lover_s%20Picnic%20Version%29.mp3" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "nome": "cscsc",
+      "genero": "J-Pop",
+      "cover": "scsc",
+      "descricao": "scscsc",
+      "albuns": []
+    }
+  ],
+  "playlists": []
+}
