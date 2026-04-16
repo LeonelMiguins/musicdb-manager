@@ -18,14 +18,16 @@ async function abrirModal(tipo) {
     
 
     // -------- ARTISTA --------
-    if (tipo === 'artista') {
-        title.textContent = 'Adicionar Artista';
-        body.innerHTML = `
-            <input id="nome" placeholder="Nome">
-            <input id="cover" placeholder="URL da capa">
-            <input id="genero" placeholder="Gênero">
-        `;
-    }
+if (tipo === 'artista') {
+    title.textContent = 'Adicionar Artista';
+
+    body.innerHTML = `
+        <input id="nome" placeholder="Nome">
+        <input id="cover" placeholder="URL da capa">
+        <input id="genero" placeholder="Gênero">
+        <textarea id="descricao" placeholder="Descrição do artista" rows="3"></textarea>
+    `;
+}
 
     // -------- ALBUM --------
     if (tipo === 'album') {
@@ -40,6 +42,7 @@ async function abrirModal(tipo) {
             <input id="nome" placeholder="Nome do álbum">
             <input id="cover" placeholder="Cover">
             <input id="genero" placeholder="Gênero">
+            <input id="ano" placeholder="Ano (ex: 2024)">
             <input id="servidor" placeholder="Servidor">
         `;
 
@@ -104,13 +107,14 @@ async function salvarModal() {
         const nome = document.getElementById('nome').value;
         const cover = document.getElementById('cover').value;
         const genero = document.getElementById('genero').value;
+        const descricao = document.getElementById('descricao').value;
 
         const letra = nome.charAt(0).toUpperCase();
 
         await fetch('/api/artistas', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ nome, cover, genero, letra })
+            body: JSON.stringify({ nome, cover, genero, letra, descricao })
         });
 
         loadArtistas();
@@ -122,6 +126,7 @@ async function salvarModal() {
         const artista_id = document.getElementById('artistaId').value;
         const cover = document.getElementById('cover').value;
         const genero = document.getElementById('genero').value;
+        const ano = document.getElementById('ano').value;
         const servidor = document.getElementById('servidor').value;
 
         await fetch('/api/albuns', {
@@ -132,6 +137,7 @@ async function salvarModal() {
                 artista_id,
                 cover,
                 genero,
+                ano,
                 servidor
             })
         });
@@ -169,6 +175,7 @@ async function loadArtistas() {
     renderArtistas(artistasCache);
 }
 
+// renderiza os artistas do banco de dados
 function renderArtistas(listaData) {
     const lista = document.getElementById('listaArtistas');
     lista.innerHTML = '';
@@ -178,7 +185,14 @@ function renderArtistas(listaData) {
 
         li.innerHTML = `
             <div class="item-row">
-                <span>${a.nome} (ID: ${a.id})</span>
+                <div class="artista-info">
+                    <img 
+                        src="${a.cover || 'https://i.scdn.co/image/ab6761610000e5ebd3c8c0b1c3b0f2b0e9c3e2b2'}" 
+                        class="artista-img"
+                    />
+                    <span>${a.nome}</span>
+                </div>
+
                 <button class="btn-delete" onclick="deletarArtista(${a.id})">
                     🗑️
                 </button>
@@ -219,6 +233,7 @@ async function loadAlbuns(artistaId) {
     renderAlbuns(filtrados);
 }
 
+// rederiza os albuns do banco de dados
 function renderAlbuns(listaData) {
     const lista = document.getElementById('listaAlbuns');
     lista.innerHTML = '';
@@ -229,7 +244,11 @@ function renderAlbuns(listaData) {
         li.innerHTML = `
             <div class="album-item">
                 <img src="${a.cover || 'https://i.scdn.co/image/ab67616d00001e0235eeb40f2fa70b35d9c48ece'}" />
-                <span>${a.nome}</span>
+
+                <div class="album-info">
+                    <span class="album-nome">${a.nome}</span>
+                    <span class="album-ano">${a.ano || ''}</span>
+                </div>
             </div>
         `;
 

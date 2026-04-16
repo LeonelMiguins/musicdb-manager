@@ -25,19 +25,24 @@ const db = new sqlite3.Database(dbPath, (err) => {
 // ativa foreign keys
 db.run("PRAGMA foreign_keys = ON;");
 
-// cria estrutura
 db.serialize(() => {
 
+    // -------- ARTISTAS --------
     db.run(`
         CREATE TABLE IF NOT EXISTS artistas (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             nome TEXT NOT NULL,
             cover TEXT,
             letra TEXT,
-            genero TEXT
+            genero TEXT,
+            descricao TEXT
         )
     `);
 
+    // 🔥 adiciona coluna se não existir (banco antigo)
+    db.run(`ALTER TABLE artistas ADD COLUMN descricao TEXT`, () => {});
+
+    // -------- ALBUNS --------
     db.run(`
         CREATE TABLE IF NOT EXISTS albuns (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -46,10 +51,15 @@ db.serialize(() => {
             cover TEXT,
             genero TEXT,
             servidor TEXT,
+            ano TEXT,
             FOREIGN KEY(artista_id) REFERENCES artistas(id) ON DELETE CASCADE
         )
     `);
 
+    // 🔥 adiciona coluna se não existir
+    db.run(`ALTER TABLE albuns ADD COLUMN ano TEXT`, () => {});
+
+    // -------- MUSICAS --------
     db.run(`
         CREATE TABLE IF NOT EXISTS musicas (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -60,20 +70,38 @@ db.serialize(() => {
         )
     `);
 
+    // -------- PLAYLISTS --------
+    db.run(`
+        CREATE TABLE IF NOT EXISTS playlists (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            nome TEXT NOT NULL
+        )
+    `);
+
+    db.run(`
+        CREATE TABLE IF NOT EXISTS playlist_musicas (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            playlist_id INTEGER,
+            musica_id INTEGER,
+            FOREIGN KEY(playlist_id) REFERENCES playlists(id) ON DELETE CASCADE,
+            FOREIGN KEY(musica_id) REFERENCES musicas(id) ON DELETE CASCADE
+        )
+    `);
+
     console.log('Tabelas garantidas.');
 
-    // 🔥 só insere dados se banco for novo
+    // 🔥 dados iniciais só se banco novo
     if (!dbExists) {
         console.log('Banco novo detectado, inserindo dados iniciais...');
 
         db.run(`
-            INSERT INTO artistas (nome, cover, letra, genero)
-            VALUES ('ARTISTA_TESTE', '', 'A', 'Rock')
+            INSERT INTO artistas (nome, cover, letra, genero, descricao)
+            VALUES ('ARTISTA_TESTE', '', 'A', 'Rock', 'Artista de teste')
         `);
 
         db.run(`
-            INSERT INTO albuns (artista_id, nome, cover, genero, servidor)
-            VALUES (1, 'ALBUM_TESTE', '', 'Rock', 'Spotify')
+            INSERT INTO albuns (artista_id, nome, cover, genero, servidor, ano)
+            VALUES (1, 'ALBUM_TESTE', '', 'Rock', 'Spotify', '2024')
         `);
 
         db.run(`

@@ -27,8 +27,11 @@ async function exportDB() {
     const artistas = await getAll("SELECT * FROM artistas");
     const albuns = await getAll("SELECT * FROM albuns");
     const musicas = await getAll("SELECT * FROM musicas");
+    const playlists = await getAll("SELECT * FROM playlists");
+    const playlistMusicas = await getAll("SELECT * FROM playlist_musicas");
 
-    const exportData = artistas.map((artista) => {
+    // -------- ARTISTAS --------
+    const artistasFormatados = artistas.map((artista) => {
       const artistaAlbuns = albuns.filter(
         (album) => album.artista_id === artista.id
       );
@@ -38,6 +41,8 @@ async function exportDB() {
         nome: artista.nome,
         genero: artista.genero,
         cover: artista.cover,
+        descricao: artista.descricao, // 🔥 NOVO
+
         albuns: artistaAlbuns.map((album) => {
           const albumMusicas = musicas.filter(
             (m) => m.album_id === album.id
@@ -47,7 +52,10 @@ async function exportDB() {
             id: album.id,
             nome: album.nome,
             cover: album.cover,
+            genero: album.genero,
             servidor: album.servidor,
+            ano: album.ano, // 🔥 NOVO
+
             tracks: albumMusicas.map((m) => ({
               id: m.id,
               title: m.nome,
@@ -57,6 +65,35 @@ async function exportDB() {
         }),
       };
     });
+
+    // -------- PLAYLISTS --------
+    const playlistsFormatadas = playlists.map((p) => {
+      const musicasDaPlaylist = playlistMusicas
+        .filter(pm => pm.playlist_id === p.id)
+        .map(pm => {
+          const musica = musicas.find(m => m.id === pm.musica_id);
+          return musica
+            ? {
+                id: musica.id,
+                title: musica.nome,
+                url: musica.url
+              }
+            : null;
+        })
+        .filter(Boolean);
+
+      return {
+        id: p.id,
+        nome: p.nome,
+        tracks: musicasDaPlaylist
+      };
+    });
+
+    // -------- JSON FINAL --------
+    const exportData = {
+      artistas: artistasFormatados,
+      playlists: playlistsFormatadas
+    };
 
     fs.writeFileSync(outputPath, JSON.stringify(exportData, null, 2));
 
