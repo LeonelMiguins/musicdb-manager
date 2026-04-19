@@ -236,6 +236,41 @@
             height: 100px;
             object-fit: cover;
         }
+
+        #genero {
+            width: 100%;
+            padding: 10px;
+            border-radius: 10px;
+            background: #1a1a1a;
+            color: #fff;
+            border: 1px solid #333;
+            font-size: 14px;
+            outline: none;
+        }
+
+        #genero:focus {
+            border-color: #1db954;
+        }
+
+        .search-container {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        #search {
+            flex: 1;
+        }
+
+        #filtroServidor {
+            padding: 8px 12px;
+            border-radius: 10px;
+            background: #1a1a1a;
+            color: #fff;
+            border: 1px solid #333;
+            outline: none;
+            cursor: pointer;
+        }
     </style>
 </head>
 
@@ -251,6 +286,11 @@
     </div>
     <div class="search-container">
         <input id="search" placeholder="Buscar artista ou álbum..." oninput="filtrar()">
+
+        <!-- filtro de servidor -->
+        <select id="filtroServidor" onchange="filtrar()">
+            <option value="">Todos</option>
+        </select>
     </div>
 
     <div class="container">

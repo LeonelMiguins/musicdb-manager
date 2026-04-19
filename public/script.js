@@ -15,8 +15,6 @@ async function abrirModal(tipo) {
 
     modal.style.display = 'flex';
 
-
-
     // -------- ARTISTA --------
     if (tipo === 'artista') {
         title.textContent = 'Adicionar Artista';
@@ -24,8 +22,28 @@ async function abrirModal(tipo) {
         body.innerHTML = `
         <input id="nome" placeholder="Nome">
         <input id="cover" placeholder="URL da capa">
-        <input id="genero" placeholder="Gênero">
-        <textarea id="descricao" placeholder="Descrição do artista" rows="3"></textarea>
+        <select id="genero">
+            <option value="">Selecione um gênero</option>
+            <option>Pop</option>
+            <option>Rock</option>
+            <option>Hip Hop</option>
+            <option>Rap</option>
+            <option>Trap</option>
+            <option>R&B</option>
+            <option>Jazz</option>
+            <option>Blues</option>
+            <option>Classical</option>
+            <option>Electronic</option>
+            <option>House</option>
+            <option>Techno</option>
+            <option>EDM</option>
+            <option>Dubstep</option>
+            <option>Reggae</option>
+            <option>Funk</option>
+            <option>Sertanejo</option>
+            <option>MPB</option>
+        </select>
+        <textarea id="descricao" placeholder="Descrição do artista"></textarea>
     `;
     }
 
@@ -67,32 +85,33 @@ async function abrirModal(tipo) {
     }
 
     // -------- SCRAPER --------
-    else if (tipo === 'scraper') {
+    if (tipo === 'scraper') {
         title.textContent = 'Importar do Internet Archive';
 
         body.innerHTML = `
-    <input id="url" placeholder="Cole a URL do álbum">
+            <input id="url" placeholder="Cole a URL do álbum">
+            <button onclick="buscarScraper()">Buscar</button>
 
-    <button onclick="buscarScraper()">Buscar</button>
+            <hr>
 
-    <hr>
+            <input id="nomeAlbum" placeholder="Nome do álbum">
+            <input id="anoAlbum" placeholder="Ano (ex: 2024)">
+            <input id="servidor" placeholder="Servidor">
 
-    <input id="nomeAlbum" placeholder="Nome do álbum">
-    <input id="anoAlbum" placeholder="Ano (ex: 2024)"> <!-- 🔥 NOVO -->
+            <input id="buscaArtista" placeholder="Buscar artista...">
+            <ul id="listaBusca"></ul>
 
-    <input id="buscaArtista" placeholder="Buscar artista...">
-    <ul id="listaBusca"></ul>
+            <input id="artistaId" placeholder="ID do artista" readonly>
 
-    <input id="artistaId" placeholder="ID do artista" readonly>
+            <hr>
 
-    <hr>
+            <div id="preview"></div>
+        `;
 
-    <div id="preview"></div>
-`;
-
-        carregarBuscaArtistas();
+        setTimeout(() => {
+            carregarBuscaArtistas();
+        }, 0);
     }
-
 }
 
 function fecharModal() {
@@ -102,25 +121,21 @@ function fecharModal() {
 // -------- SALVAR --------
 async function salvarModal() {
 
-    // -------- ARTISTA --------
     if (tipoModal === 'artista') {
         const nome = document.getElementById('nome').value;
         const cover = document.getElementById('cover').value;
         const genero = document.getElementById('genero').value;
         const descricao = document.getElementById('descricao').value;
 
-        const letra = nome.charAt(0).toUpperCase();
-
         await fetch('/api/artistas', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ nome, cover, genero, letra, descricao })
+            body: JSON.stringify({ nome, cover, genero, descricao })
         });
 
         loadArtistas();
     }
 
-    // -------- ALBUM --------
     if (tipoModal === 'album') {
         const nome = document.getElementById('nome').value;
         const artista_id = document.getElementById('artistaId').value;
@@ -145,7 +160,6 @@ async function salvarModal() {
         loadArtistas();
     }
 
-    // -------- MUSICA --------
     if (tipoModal === 'musica') {
         const nome = document.getElementById('nome').value;
         const url = document.getElementById('url').value;
@@ -154,11 +168,7 @@ async function salvarModal() {
         await fetch('/api/musicas', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                nome,
-                url,
-                album_id
-            })
+            body: JSON.stringify({ nome, url, album_id })
         });
 
         loadArtistas();
@@ -167,6 +177,69 @@ async function salvarModal() {
     fecharModal();
 }
 
+// -------- BUSCA ARTISTA (CORRIGIDO) --------
+async function carregarBuscaArtistas() {
+    const res = await fetch('/api/artistas');
+    const artistas = await res.json();
+
+    const modal = document.getElementById('modal');
+    const input = modal.querySelector('#buscaArtista');
+    const lista = modal.querySelector('#listaBusca');
+
+    if (!input || !lista) return;
+
+    input.oninput = () => {
+        const valor = input.value.toLowerCase();
+        lista.innerHTML = '';
+
+        if (!valor) return;
+
+        artistas
+            .filter(a => a.nome.toLowerCase().includes(valor))
+            .forEach(a => {
+                const li = document.createElement('li');
+                li.textContent = `${a.nome} (ID: ${a.id})`;
+
+                li.onclick = () => {
+                    modal.querySelector('#artistaId').value = a.id;
+                    input.value = a.nome;
+                    lista.innerHTML = '';
+                };
+
+                lista.appendChild(li);
+            });
+    };
+}
+
+// -------- BUSCA ÁLBUM --------
+async function carregarBuscaAlbuns() {
+    const res = await fetch('/api/albuns');
+    const albuns = await res.json();
+
+    const modal = document.getElementById('modal');
+    const input = modal.querySelector('#buscaAlbum');
+    const lista = modal.querySelector('#listaBuscaAlbum');
+
+    input.oninput = () => {
+        const valor = input.value.toLowerCase();
+        lista.innerHTML = '';
+
+        albuns
+            .filter(a => a.nome.toLowerCase().includes(valor))
+            .forEach(a => {
+                const li = document.createElement('li');
+                li.textContent = `${a.nome} (ID: ${a.id})`;
+
+                li.onclick = () => {
+                    modal.querySelector('#albumId').value = a.id;
+                    input.value = a.nome;
+                    lista.innerHTML = '';
+                };
+
+                lista.appendChild(li);
+            });
+    };
+}
 // -------- LISTAGEM --------
 async function loadArtistas() {
     const res = await fetch('/api/artistas');
@@ -264,18 +337,23 @@ function renderAlbuns(listaData) {
 // funçao para filtrar albuns e artistas por pesquisa
 function filtrar() {
     const termo = document.getElementById('search').value.toLowerCase();
+    const servidor = document.getElementById('filtroServidor').value;
 
-    // filtrar artistas
+    // ARTISTAS
     const artistasFiltrados = artistasCache.filter(a =>
         a.nome.toLowerCase().includes(termo)
     );
 
     renderArtistas(artistasFiltrados);
 
-    // filtrar álbuns também
-    const albunsFiltrados = albunsCache.filter(a =>
+    // ÁLBUNS
+    let albunsFiltrados = albunsCache.filter(a =>
         a.nome.toLowerCase().includes(termo)
     );
+
+    if (servidor) {
+        albunsFiltrados = albunsFiltrados.filter(a => a.servidor === servidor);
+    }
 
     renderAlbuns(albunsFiltrados);
 }
@@ -303,36 +381,53 @@ async function carregarBuscaArtistas() {
     const res = await fetch('/api/artistas');
     const artistas = await res.json();
 
-    const input = document.getElementById('buscaArtista');
-    const lista = document.getElementById('listaBusca');
+    const modal = document.getElementById('modal');
 
-    input.addEventListener('input', () => {
+    const input = modal.querySelector('#buscaArtista');
+    const lista = modal.querySelector('#listaBusca');
+    const artistaId = modal.querySelector('#artistaId');
+
+    if (!input || !lista || !artistaId) return;
+
+    let selecionado = null;
+
+    input.oninput = () => {
         const valor = input.value.toLowerCase();
         lista.innerHTML = '';
+
+        if (!valor) return;
 
         artistas
             .filter(a => a.nome.toLowerCase().includes(valor))
             .forEach(a => {
                 const li = document.createElement('li');
+
                 li.textContent = `${a.nome} (ID: ${a.id})`;
+                li.style.cursor = "pointer";
 
                 li.onclick = () => {
-                    document.getElementById('artistaId').value = a.id;
-                    lista.innerHTML = '';
+                    selecionado = a.id;
+
+                    artistaId.value = String(a.id); // 👈 FORÇA STRING
                     input.value = a.nome;
+
+                    lista.innerHTML = '';
+
+                    console.log("ARTISTA SELECIONADO:", selecionado);
                 };
 
                 lista.appendChild(li);
             });
-    });
+    };
 }
 
 async function carregarBuscaAlbuns() {
     const res = await fetch('/api/albuns');
     const albuns = await res.json();
 
-    const input = document.getElementById('buscaAlbum');
-    const lista = document.getElementById('listaBuscaAlbum');
+const modal = document.getElementById('modal');
+const input = modal.querySelector('#buscaAlbum');
+const lista = modal.querySelector('#listaBuscaAlbum');
 
     input.addEventListener('input', () => {
         const valor = input.value.toLowerCase();
@@ -414,6 +509,8 @@ async function salvarScraper() {
 
     const nomeDigitado = document.getElementById('nomeAlbum').value;
     const ano = document.getElementById('anoAlbum').value;
+    const servidor = document.getElementById('servidor').value;
+    console.log(ano, servidor)
 
     const nomeAlbum = nomeDigitado || dadosScraper.album
         .split('/')
@@ -428,8 +525,8 @@ async function salvarScraper() {
             artista_id,
             cover: dadosScraper.cover,
             genero: '',
-            ano,
-            servidor: 'Internet Archive'
+            servidor: servidor,
+            ano:  ano
         })
     });
 
@@ -453,6 +550,48 @@ async function salvarScraper() {
     loadArtistas();
 }
 
+async function preencherFiltroServidor() {
+    const res = await fetch('/api/albuns');
+    const albuns = await res.json();
+
+    const servidores = [...new Set(
+        albuns
+            .map(a => a.servidor)
+            .filter(s => s && s.trim() !== "")
+    )];
+
+    const select = document.getElementById('filtroServidor');
+
+    servidores.forEach(s => {
+        const opt = document.createElement('option');
+        opt.value = s;
+        opt.textContent = s;
+        select.appendChild(opt);
+    });
+}
+
+function filtrarPorServidor(servidor) {
+    if (!servidor) {
+        renderAlbuns(albunsCache);
+        return;
+    }
+
+    const filtrados = albunsCache.filter(a => a.servidor === servidor);
+    renderAlbuns(filtrados);
+}
+
+async function getServidoresUnicos() {
+    const res = await fetch('/api/albuns');
+    const albuns = await res.json();
+
+    const servidores = albuns
+        .map(a => a.servidor)
+        .filter(s => s && s.trim() !== "");
+
+    // remove duplicados
+    return [...new Set(servidores)];
+}
 
 // INIT
 loadArtistas();
+preencherFiltroServidor();

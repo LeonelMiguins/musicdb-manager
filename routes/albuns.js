@@ -22,4 +22,31 @@ router.post('/', async (req, res) => {
     }
 });
 
+router.post('/', async (req, res) => {
+    try {
+        const {
+            artista_id,
+            nome,
+            cover,
+            genero,
+            servidor,
+            ano
+        } = req.body;
+
+        const result = await Album.addAlbum({
+            artista_id,
+            nome,
+            cover,
+            genero,
+            servidor,
+            ano
+        });
+
+        res.json(result);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+
 module.exports = router;

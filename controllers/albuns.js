@@ -12,9 +12,16 @@ exports.getAlbuns = () => {
 exports.addAlbum = (album) => {
     return new Promise((resolve, reject) => {
         db.run(
-            `INSERT INTO albuns (artista_id, nome, cover, genero, servidor)
-             VALUES (?, ?, ?, ?, ?)`,
-            [album.artista_id, album.nome, album.cover, album.genero, album.servidor],
+            `INSERT INTO albuns (artista_id, nome, cover, genero, servidor, ano)
+             VALUES (?, ?, ?, ?, ?, ?)`,
+            [
+                album.artista_id,
+                album.nome,
+                album.cover,
+                album.genero,
+                album.servidor,
+                album.ano
+            ],
             function (err) {
                 if (err) reject(err);
                 else resolve({ id: this.lastID });
