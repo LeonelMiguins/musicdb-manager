@@ -6,8 +6,16 @@ async function scrapeArchive(url) {
         const { data } = await axios.get(url);
         const $ = cheerio.load(data);
 
-        const results = { album: url, cover: null, tracks: [] };
+        const results = {
+            album: url,
+            cover: null,
+            tracks: [],
+            info: null // 🔥 novo campo
+        };
 
+        // =========================
+        // 🎵 TRACKS + COVER (igual já está)
+        // =========================
         $("a").each((_, el) => {
             const href = $(el).attr("href");
             if (!href) return;
@@ -24,7 +32,23 @@ async function scrapeArchive(url) {
             }
         });
 
+        // =========================
+        // 🔥 NOVO: tenta carregar info.json
+        // =========================
+        try {
+            const infoUrl = new URL("info.json", url).href;
+            const infoRes = await axios.get(infoUrl);
+
+            if (infoRes.data) {
+                results.info = infoRes.data;
+            }
+        } catch (e) {
+            // silencioso → não quebra se não existir
+            console.log("[SCRAPER] info.json não encontrado");
+        }
+
         return results;
+
     } catch (err) {
         console.error("Erro no scraper:", err);
         return null;

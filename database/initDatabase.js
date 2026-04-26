@@ -103,7 +103,6 @@ function initDb() {
                 INSERT INTO albuns (artista_id, nome, ano, genero, descricao, cover, servidor)
                 VALUES 
                 (1, 'Sombras da Guerra', '1994', 'Rock', 'Álbum épico', 'https://artist99.cdn107.com/90a/90a1bab4054b8dc7d714d826b79e3006_lg.jpg', 'Local'),
-                (2, 'Luz Interior', '1996', 'Pop', 'Álbum emocional', 'https://artist99.cdn107.com/90a/90a1bab4054b8dc7d714d826b79e3006_lg.jpg', 'Spotify')
             `);
 
             await run(db, `
@@ -111,7 +110,7 @@ function initDb() {
                 VALUES 
                 (1, 'Chamas Eternas', 'https://m4a-64.jango.com/43/03/46/4303468333325401379.m4a'),
                 (1, 'Eco das Ruínas', 'https://m4a-64.jango.com/25/94/88/2594883900153723657.m4a'),
-                (2, 'Brilho Noturno', 'https://m4a-64.jango.com/22/48/20/2248207164423705543.m4a')
+                (1, 'Brilho Noturno', 'https://m4a-64.jango.com/22/48/20/2248207164423705543.m4a')
             `);
 
             await run(db, `
@@ -123,8 +122,8 @@ function initDb() {
             await run(db, `
                 INSERT INTO playlist_musicas (playlist_id, nome, artista, url, cover)
                 VALUES 
-                (1, 'Track Livre 1', 'Independente', 'https://m4a-64.jango.com/22/48/20/2248207164423705543.m4a', 'https://dn711103.ca.archive.org/0/items/rami-rez-1036544-rami-rez/Contracapa.jpg'),
-                (1, 'Track Livre 2', 'Independente', 'https://m4a-64.jango.com/22/48/20/2248207164423705543.m4a', 'https://dn711103.ca.archive.org/0/items/rami-rez-1036544-rami-rez/Contracapa.jpg')
+                (1, 'Uma noite de Luar', 'Independente do amanhã', 'https://m4a-64.jango.com/22/48/20/2248207164423705543.m4a', 'https://dn711103.ca.archive.org/0/items/rami-rez-1036544-rami-rez/Contracapa.jpg'),
+                (1, 'Eu amo você', 'Lucas Ricardo', 'https://m4a-64.jango.com/22/48/20/2248207164423705543.m4a', 'https://dn711103.ca.archive.org/0/items/rami-rez-1036544-rami-rez/Contracapa.jpg')
             `);
 
             console.log("Seed concluído!");

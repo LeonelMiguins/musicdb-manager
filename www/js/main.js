@@ -197,16 +197,25 @@ async function buscarScraper() {
 
     const data = await res.json();
 
-    //console.log("SCRAPER RESPONSE:", data); <- DEBUG
-
     if (!data) return alert("Nada encontrado");
 
     window.scraperTracks = data.tracks || [];
 
-    document.getElementById('scraper-nome').value = ' ';
-    document.getElementById('scraper-cover').value = data.cover || '';
-    document.getElementById('scraper-ano').value = '';
-    document.getElementById('scraper-genero').value = '';
+    // 🔥 usa info.json se existir
+    const info = data.info || {};
+
+    document.getElementById('scraper-nome').value =
+        info.name || "";
+
+    document.getElementById('scraper-cover').value =
+        data.cover || "";
+
+    document.getElementById('scraper-ano').value =
+        info.year || "";
+
+    document.getElementById('scraper-genero').value =
+        info.genre || "";
+
     document.getElementById('scraper-servidor').value = 'Scraper';
 
     const container = document.getElementById('scraper-resultados');

@@ -11,11 +11,12 @@ router.post('/', async (req, res) => {
         return res.status(500).json({ error: 'Scraper falhou' });
     }
 
-    return res.json({
-        album: result.album,
-        cover: result.cover,
-        tracks: result.tracks   // 🔥 ISSO ESTAVA FALTANDO
-    });
+return res.json({
+    album: result.album,
+    cover: result.cover,
+    tracks: result.tracks,
+    info: result.info // 🔥 novo
+});
 });
 
 module.exports = router;
