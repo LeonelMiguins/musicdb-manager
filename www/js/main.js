@@ -23,10 +23,10 @@ export async function loadHome() {
 
 window.loadHome = loadHome;
 
-// 🎨 RENDER
+// 🎨 RENDER HOME
 function render(lista) {
-app.innerHTML = `<div class="home-grid"></div>`;
-const grid = app.querySelector('.home-grid');
+    app.innerHTML = `<div class="home-grid"></div>`;
+    const grid = app.querySelector('.home-grid');
 
     lista.forEach(item => {
         const div = document.createElement('div');
@@ -35,20 +35,18 @@ const grid = app.querySelector('.home-grid');
         div.innerHTML = `
             <img src="${item.cover || ''}">
             <div class="card-title">${item.nome}</div>
-            <div>${item.id || ''}</div>
+            <div>ID: ${item.id || ''}</div>
             <div>${item.genero || ''}</div>
-            <div>${item.descricao || ''}</div>
-            <div>${item.servidor || ''}</div>
                 <button class="delete-btn" data-id="${item.id}">
         🗑 Deletar
     </button>
         `;
 
         div.onclick = (e) => {
-    if (e.target.classList.contains('delete-btn')) return;
-    localStorage.setItem("CURRENT_ARTIST_ID", item.id )
-    loadArtista(item.id);
-};
+            if (e.target.classList.contains('delete-btn')) return;
+            localStorage.setItem("CURRENT_ARTIST_ID", item.id)
+            loadArtista(item.id);
+        };
 
         grid.appendChild(div);
     });
@@ -102,6 +100,16 @@ function abrirModal(tipo) {
             <input id="artista_id" placeholder="ID do artista">
         `;
     }
+
+    if (tipo === 'playlists') {
+        title.textContent = 'Nova Playlist';
+
+        body.innerHTML = `
+            <input id="playlist_nome" placeholder="Nome da playlist">
+            <input id="playlist_cover" placeholder="Cover (opcional)">
+            <input id="playlist_descricao" placeholder="Descrição">
+        `;
+    }
 }
 
 window.abrirModal = abrirModal;
@@ -147,7 +155,31 @@ async function salvarModal() {
         alert("Album adicionado!")
     }
 
-    
+    if (tipoModal === 'playlists') {
+
+        const nome = document.getElementById('playlist_nome').value;
+        const cover = document.getElementById('playlist_cover').value;
+
+        if (!nome) {
+            alert("Nome da playlist é obrigatório");
+            return;
+        }
+
+        await fetch('/api/playlists', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                nome,
+                cover: cover || null,
+                descricao: ""
+            })
+        });
+
+        console.log("Playlist criada!");
+        alert("Playlist criada com sucesso!");
+    }
+
+
     fecharModal();
     loadHome();
 }
@@ -229,8 +261,8 @@ async function salvarScraper() {
     loadHome();
     //console.log("TRACKS:", window.scraperTracks); <- DEBUG
     //console.log("ALBUM RESPONSE:", album); <- DEBUG
-    console.log("Album adicionado ao artista de id: "+artista_id)
-    alert("Album adicionado ao artista de id: "+artista_id)
+    console.log("Album adicionado ao artista de id: " + artista_id)
+    alert("Album adicionado ao artista de id: " + artista_id)
 }
 
 function fecharScraper() {
@@ -293,8 +325,8 @@ async function saveMusicToPlaylist() {
         })
     });
 
-    console.log("música salva na playlist: "+currentPlaylist)
-    alert("música salva na playlist: "+currentPlaylist)
+    console.log("música salva na playlist: " + currentPlaylist)
+    alert("música salva na playlist: " + currentPlaylist)
     closeMusicPlaylistModal();
     loadPlaylistMusicas(currentPlaylist);
 }
@@ -303,15 +335,15 @@ async function deleteMusic(id) {
 
     const confirmacao = confirm("Deseja realmente excluir esta música?");
     if (!confirmacao) return;
-    
+
     await fetch(`/api/playlists/musicas/${id}`, {
         method: 'DELETE'
     });
 
 
     const currentPlaylist = localStorage.getItem("CURRENT_PLAYLIST_ID")
-    console.log("Música deletada da playlist "+currentPlaylist)
-    alert("Música deletada da playlist "+currentPlaylist)
+    console.log("Música deletada da playlist " + currentPlaylist)
+    alert("Música deletada da playlist " + currentPlaylist)
     // recarrega playlist atual
     const playlistId = localStorage.getItem("CURRENT_PLAYLIST_ID");
     loadPlaylistMusicas(playlistId);

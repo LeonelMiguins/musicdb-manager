@@ -14,11 +14,22 @@ exports.getPlaylists = () => {
 exports.addPlaylist = (playlist) => {
     return new Promise((resolve, reject) => {
         db.run(
-            "INSERT INTO playlists (name, desc) VALUES (?, ?)",
-            [playlist.name, playlist.desc],
+            `INSERT INTO playlists (nome, cover, descricao, artista, servidor)
+             VALUES (?, ?, ?, ?, ?)`,
+            [
+                playlist.nome,
+                playlist.cover || null,
+                playlist.descricao || "",
+                playlist.artista || "Vários",
+                playlist.servidor || "Local"
+            ],
             function (err) {
-                if (err) reject(err);
-                else resolve({ id: this.lastID });
+                if (err) {
+                    console.error("[DB PLAYLIST ERROR]", err.message);
+                    reject(err);
+                } else {
+                    resolve({ id: this.lastID });
+                }
             }
         );
     });
