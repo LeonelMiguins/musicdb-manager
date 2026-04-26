@@ -95,14 +95,13 @@ function initDb() {
             await run(db, `
                 INSERT INTO artistas (nome, genero, descricao, cover, servidor)
                 VALUES 
-                ('Aron', 'Rock', 'Herói da sua história', 'https://artist99.cdn107.com/3c7/3c70bc2e79f555d1051ef699484e6e73_lg.jpg', 'Local'),
-                ('Ester', 'Pop', 'Cantora misteriosa', 'https://artist99.cdn107.com/17a/17ad22c1b05778ddcf236e12fd5263ef_lg.jpg', 'Spotify')
+                ('Aron Stwart Little', 'Rock', 'Herói da sua história', 'https://artist99.cdn107.com/3c7/3c70bc2e79f555d1051ef699484e6e73_lg.jpg', 'Local')
             `);
 
             await run(db, `
                 INSERT INTO albuns (artista_id, nome, ano, genero, descricao, cover, servidor)
                 VALUES 
-                (1, 'Sombras da Guerra', '1994', 'Rock', 'Álbum épico', 'https://artist99.cdn107.com/90a/90a1bab4054b8dc7d714d826b79e3006_lg.jpg', 'Local'),
+                (1, 'Sombras da Guerra', '1994', 'Rock', 'Álbum épico', 'https://artist99.cdn107.com/90a/90a1bab4054b8dc7d714d826b79e3006_lg.jpg', 'Local')
             `);
 
             await run(db, `
@@ -122,8 +121,8 @@ function initDb() {
             await run(db, `
                 INSERT INTO playlist_musicas (playlist_id, nome, artista, url, cover)
                 VALUES 
-                (1, 'Uma noite de Luar', 'Independente do amanhã', 'https://m4a-64.jango.com/22/48/20/2248207164423705543.m4a', 'https://dn711103.ca.archive.org/0/items/rami-rez-1036544-rami-rez/Contracapa.jpg'),
-                (1, 'Eu amo você', 'Lucas Ricardo', 'https://m4a-64.jango.com/22/48/20/2248207164423705543.m4a', 'https://dn711103.ca.archive.org/0/items/rami-rez-1036544-rami-rez/Contracapa.jpg')
+                (1, 'Uma noite de Luar', 'Independente do amanhã', 'https://m4a-64.jango.com/22/48/20/2248207164423705543.m4a', 'https://dn711103.ca.archive.org/0/items/rami-rez-1036544-rami-rez/Contracapa.jpg')
+                
             `);
 
             console.log("Seed concluído!");

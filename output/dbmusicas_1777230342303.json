@@ -1,0 +1,142 @@
+{
+  "artistas": [
+    {
+      "id": 1,
+      "nome": "Aron Stwart Little",
+      "servidor": "Local",
+      "genero": "Rock",
+      "cover": "https://artist99.cdn107.com/3c7/3c70bc2e79f555d1051ef699484e6e73_lg.jpg",
+      "descricao": "Herói da sua história",
+      "albuns": [
+        {
+          "id": 1,
+          "nome": "Sombras da Guerra",
+          "cover": "https://artist99.cdn107.com/90a/90a1bab4054b8dc7d714d826b79e3006_lg.jpg",
+          "genero": "Rock",
+          "servidor": "Local",
+          "ano": "1994",
+          "tracks": [
+            { "id": 1, "title": "Chamas Eternas", "url": "https://m4a-64.jango.com/43/03/46/4303468333325401379.m4a" },
+            { "id": 2, "title": "Eco das Ruínas", "url": "https://m4a-64.jango.com/25/94/88/2594883900153723657.m4a" },
+            { "id": 3, "title": "Brilho Noturno", "url": "https://m4a-64.jango.com/22/48/20/2248207164423705543.m4a" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "nome": "Anderson Freire",
+      "servidor": null,
+      "genero": "Christian Music, Gospel",
+      "cover": "https://i.scdn.co/image/ab6761610000e5ebcd6c889e3da0b84988bd616b",
+      "descricao": "Anderson Ricardo Freire é um cantor e compositor brasileiro, conhecido como intérprete de música cristã contemporânea para uma série de artistas. É Membro da Igreja Metodista Wesleyana. Fez parte da banda Vocal Asafe e da banda Giom, e saiu para ingressar em carreira solo.",
+      "albuns": [
+        {
+          "id": 2,
+          "nome": "Identidade",
+          "cover": "https://ia601909.us.archive.org/15/items/an-fr-id/cover.jpg",
+          "genero": "Christian Music, Gospel",
+          "servidor": null,
+          "ano": "2010",
+          "tracks": [
+            { "id": 4, "title": "01 - Identidade", "url": "https://ia601909.us.archive.org/15/items/an-fr-id/01%20-%20Identidade.mp3" },
+            { "id": 5, "title": "02 - Coração Valente", "url": "https://ia601909.us.archive.org/15/items/an-fr-id/02%20-%20Cora%C3%A7%C3%A3o%20Valente.mp3" },
+            { "id": 6, "title": "03 - Capacita-me", "url": "https://ia601909.us.archive.org/15/items/an-fr-id/03%20-%20Capacita-me.mp3" },
+            { "id": 7, "title": "04 - Canção do Céu", "url": "https://ia601909.us.archive.org/15/items/an-fr-id/04%20-%20Can%C3%A7%C3%A3o%20do%20C%C3%A9u.mp3" },
+            { "id": 8, "title": "05 - Primeira Essência (Jardim Particular)", "url": "https://ia601909.us.archive.org/15/items/an-fr-id/05%20-%20Primeira%20Ess%C3%AAncia%20%28Jardim%20Particular%29.mp3" },
+            { "id": 9, "title": "06 - Colisão", "url": "https://ia601909.us.archive.org/15/items/an-fr-id/06%20-%20Colis%C3%A3o.mp3" },
+            { "id": 10, "title": "07 - Meu Carpinteiro", "url": "https://ia601909.us.archive.org/15/items/an-fr-id/07%20-%20Meu%20Carpinteiro.mp3" },
+            { "id": 11, "title": "08 - Imperfeito", "url": "https://ia601909.us.archive.org/15/items/an-fr-id/08%20-%20Imperfeito.mp3" },
+            { "id": 12, "title": "09 - Remédio Sobrenatural", "url": "https://ia601909.us.archive.org/15/items/an-fr-id/09%20-%20Rem%C3%A9dio%20Sobrenatural.mp3" },
+            { "id": 13, "title": "10 - A Senha", "url": "https://ia601909.us.archive.org/15/items/an-fr-id/10%20-%20A%20Senha.mp3" },
+            { "id": 14, "title": "11 - Imensidão", "url": "https://ia601909.us.archive.org/15/items/an-fr-id/11%20-%20Imensid%C3%A3o.mp3" },
+            { "id": 15, "title": "12 - Coração de Jó", "url": "https://ia601909.us.archive.org/15/items/an-fr-id/12%20-%20Cora%C3%A7%C3%A3o%20de%20J%C3%B3.mp3" },
+            { "id": 16, "title": "13 - Adorador", "url": "https://ia601909.us.archive.org/15/items/an-fr-id/13%20-%20Adorador.mp3" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "nome": "Cassiane",
+      "servidor": null,
+      "genero": "Christian Music, Gospel",
+      "cover": "https://i.scdn.co/image/ab6761610000e5ebf0544fd215cec6388e7e7613",
+      "descricao": "Cassiane Santana Santos Manhães Guimarães é uma cantora, compositora e pastora brasileira. Com o disco Sem Palavras, Cassiane tornou-se uma das intérpretes mais notáveis do segmento evangélico.",
+      "albuns": [
+        {
+          "id": 3,
+          "nome": "Com Muito Louvor",
+          "cover": "https://ia600401.us.archive.org/20/items/cas-cm-mt-lv/cover.jpg",
+          "genero": "Christian Music, Gospel",
+          "servidor": null,
+          "ano": "1999",
+          "tracks": [
+            { "id": 17, "title": "01 - Com Muito Louvor", "url": "https://ia600401.us.archive.org/20/items/cas-cm-mt-lv/01%20-%20Com%20Muito%20Louvor.mp3" },
+            { "id": 18, "title": "02 - Festa no Céu", "url": "https://ia600401.us.archive.org/20/items/cas-cm-mt-lv/02%20-%20Festa%20no%20C%C3%A9u.mp3" },
+            { "id": 19, "title": "03 - Com Cristo é Vencer", "url": "https://ia600401.us.archive.org/20/items/cas-cm-mt-lv/03%20-%20Com%20Cristo%20%C3%A9%20Vencer.mp3" },
+            { "id": 20, "title": "04 - Basta Uma Palavra", "url": "https://ia600401.us.archive.org/20/items/cas-cm-mt-lv/04%20-%20Basta%20Uma%20Palavra.mp3" },
+            { "id": 21, "title": "05 - Fogo Santo", "url": "https://ia600401.us.archive.org/20/items/cas-cm-mt-lv/05%20-%20Fogo%20Santo.mp3" },
+            { "id": 22, "title": "06 - Hino da Vitória", "url": "https://ia600401.us.archive.org/20/items/cas-cm-mt-lv/06%20-%20Hino%20da%20Vit%C3%B3ria.mp3" },
+            { "id": 23, "title": "07 - Cachoeira de Poder", "url": "https://ia600401.us.archive.org/20/items/cas-cm-mt-lv/07%20-%20Cachoeira%20de%20Poder.mp3" },
+            { "id": 24, "title": "08 - Santo, Santo", "url": "https://ia600401.us.archive.org/20/items/cas-cm-mt-lv/08%20-%20Santo%2C%20Santo.mp3" },
+            { "id": 25, "title": "09 - Oferta Agradável a Ti", "url": "https://ia600401.us.archive.org/20/items/cas-cm-mt-lv/09%20-%20Oferta%20Agrad%C3%A1vel%20a%20Ti.mp3" },
+            { "id": 26, "title": "10 - Forte Campeão", "url": "https://ia600401.us.archive.org/20/items/cas-cm-mt-lv/10%20-%20Forte%20Campe%C3%A3o.mp3" },
+            { "id": 27, "title": "11 - Como Deus Não Há", "url": "https://ia600401.us.archive.org/20/items/cas-cm-mt-lv/11%20-%20Como%20Deus%20N%C3%A3o%20H%C3%A1.mp3" },
+            { "id": 28, "title": "12 - Deus Tem Poder", "url": "https://ia600401.us.archive.org/20/items/cas-cm-mt-lv/12%20-%20Deus%20Tem%20Poder.mp3" },
+            { "id": 29, "title": "13 - O Chamado", "url": "https://ia600401.us.archive.org/20/items/cas-cm-mt-lv/13%20-%20O%20Chamado.mp3" },
+            { "id": 30, "title": "14 - Tudo Novo", "url": "https://ia600401.us.archive.org/20/items/cas-cm-mt-lv/14%20-%20Tudo%20Novo.mp3" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "nome": "Thalles Roberto",
+      "servidor": null,
+      "genero": "Christian Music, Gospel, Groove",
+      "cover": "https://i.scdn.co/image/ab6761610000e5ebf1fe4f183482972da7d5e757",
+      "descricao": "Thalles Roberto da Silva é um cantor e compositor brasileiro. Mais conhecido pelo seu trabalho na música cristã contemporânea. Foi músico de apoio do grupo mineiro Jota Quest e trabalhou com Jammil e Uma Noites por anos.",
+      "albuns": [
+        {
+          "id": 4,
+          "nome": "Uma História Escrita pelo Dedo de Deus, Vol. 1 (Ao Vivo)",
+          "cover": "https://ia903209.us.archive.org/18/items/thalles-roberto-uma-historia-escrita-pelo-dedo-de-deus-vol.-1-ao-vivo/cover.jpg",
+          "genero": "Christian Music, Gospel, Groove",
+          "servidor": null,
+          "ano": "2013",
+          "tracks": [
+            { "id": 31, "title": "01 - Escrita pelo Dedo de Deus (Ao Vivo)", "url": "https://ia903209.us.archive.org/18/items/thalles-roberto-uma-historia-escrita-pelo-dedo-de-deus-vol.-1-ao-vivo/01%20-%20Escrita%20pelo%20Dedo%20de%20Deus%20%28Ao%20Vivo%29.mp3" },
+            { "id": 32, "title": "02 - Deus da Minha Vida (Ao Vivo)", "url": "https://ia903209.us.archive.org/18/items/thalles-roberto-uma-historia-escrita-pelo-dedo-de-deus-vol.-1-ao-vivo/02%20-%20Deus%20da%20Minha%20Vida%20%28Ao%20Vivo%29.mp3" },
+            { "id": 33, "title": "03 - Me Faz Viver (Ao Vivo)", "url": "https://ia903209.us.archive.org/18/items/thalles-roberto-uma-historia-escrita-pelo-dedo-de-deus-vol.-1-ao-vivo/03%20-%20Me%20Faz%20Viver%20%28Ao%20Vivo%29.mp3" },
+            { "id": 34, "title": "04 - Arde Outra Vez (Ao Vivo)", "url": "https://ia903209.us.archive.org/18/items/thalles-roberto-uma-historia-escrita-pelo-dedo-de-deus-vol.-1-ao-vivo/04%20-%20Arde%20Outra%20Vez%20%28Ao%20Vivo%29.mp3" },
+            { "id": 35, "title": "05 - Como É Bom Poder Acordar (Ao Vivo)", "url": "https://ia903209.us.archive.org/18/items/thalles-roberto-uma-historia-escrita-pelo-dedo-de-deus-vol.-1-ao-vivo/05%20-%20Como%20%C3%89%20Bom%20Poder%20Acordar%20%28Ao%20Vivo%29.mp3" },
+            { "id": 36, "title": "06 - Eu Amo Vocês 3 (Ao Vivo)", "url": "https://ia903209.us.archive.org/18/items/thalles-roberto-uma-historia-escrita-pelo-dedo-de-deus-vol.-1-ao-vivo/06%20-%20Eu%20Amo%20Voc%C3%AAs%203%20%28Ao%20Vivo%29.mp3" },
+            { "id": 37, "title": "07 - Eu Escolho Deus (Ao Vivo)", "url": "https://ia903209.us.archive.org/18/items/thalles-roberto-uma-historia-escrita-pelo-dedo-de-deus-vol.-1-ao-vivo/07%20-%20Eu%20Escolho%20Deus%20%28Ao%20Vivo%29.mp3" },
+            { "id": 38, "title": "08 - Mesmo Sem Entender (Ao Vivo)", "url": "https://ia903209.us.archive.org/18/items/thalles-roberto-uma-historia-escrita-pelo-dedo-de-deus-vol.-1-ao-vivo/08%20-%20Mesmo%20Sem%20Entender%20%28Ao%20Vivo%29.mp3" },
+            { "id": 39, "title": "09 - Nada Além de Ti (Ao Vivo)", "url": "https://ia903209.us.archive.org/18/items/thalles-roberto-uma-historia-escrita-pelo-dedo-de-deus-vol.-1-ao-vivo/09%20-%20Nada%20Al%C3%A9m%20de%20Ti%20%28Ao%20Vivo%29.mp3" },
+            { "id": 40, "title": "10 - Casa do Pai (Ao Vivo)", "url": "https://ia903209.us.archive.org/18/items/thalles-roberto-uma-historia-escrita-pelo-dedo-de-deus-vol.-1-ao-vivo/10%20-%20Casa%20do%20Pai%20%28Ao%20Vivo%29.mp3" },
+            { "id": 41, "title": "11 - Oh Meu Irmãozinho (Ao Vivo)", "url": "https://ia903209.us.archive.org/18/items/thalles-roberto-uma-historia-escrita-pelo-dedo-de-deus-vol.-1-ao-vivo/11%20-%20Oh%20Meu%20Irm%C3%A3ozinho%20%28Ao%20Vivo%29.mp3" }
+          ]
+        }
+      ]
+    }
+  ],
+  "playlists": [
+    {
+      "id": 1,
+      "nome": "Gospel acústico",
+      "cover": "https://cdn-academy.akamaized.net/sscdn/tb/650x650/palcomp3-playlists/34190710-7dbe-42fd-a016-7af1c9c79eff.jpg",
+      "descricao": "Ouça essa playlist feita pela nossa equipe de especialistas em artistas independentes. Ouça também pelo app, baixe agora!",
+      "artista": "Vários",
+      "servidor": "palco-mp3",
+      "tracks": [
+        { "id": 1, "title": "Quem É Esse", "artist": " Paulo Felipe", "url": "https://palcocdn.akamaized.net/2/4/b/b/paulo-felipe-quem-e-esse-5fd4c24f.mp3", "cover": "https://dn711103.ca.archive.org/0/items/rami-rez-1036544-rami-rez/Contracapa.jpg" },
+        { "id": 2, "title": "O Céu Te Ouviu", "artist": "Priscila Sotero", "url": "https://palcocdn.akamaized.net/2/9/a/b/priscilasotero-o-ceu-te-ouviu-8a04f4c4.mp3", "cover": "" },
+        { "id": 3, "title": "A Cruz Me Pertencia", "artist": "Jonas De Souza", "url": "https://palcocdn.akamaized.net/0/a/1/5/jonassouzaofficial-a-cruz-me-pertencia-804927fd.mp3", "cover": "" },
+        { "id": 4, "title": "Minha Poesia", "artist": "Suzi Martinez", "url": "https://palcocdn.akamaized.net/0/9/7/6/Suzi_martinez-minha-poesia-0a9dc622.mp3", "cover": "" },
+        { "id": 5, "title": "Experiências", "artist": "Aldo Assis", "url": "https://palcocdn.akamaized.net/e/b/5/2/Aldo-Assis-aldo-assis-experiencias-6018faf1.mp3", "cover": "" }
+      ]
+    }
+  ]
+}

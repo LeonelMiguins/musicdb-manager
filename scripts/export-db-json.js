@@ -82,6 +82,10 @@ async function exportDB() {
             return {
                 id: p.id,
                 nome: p.nome,
+                cover: p.cover || null,
+                descricao: p.descricao || "",
+                artista: p.artista || "Vários",
+                servidor: p.servidor || "Local",
                 tracks: musicasDaPlaylist
             };
         });
