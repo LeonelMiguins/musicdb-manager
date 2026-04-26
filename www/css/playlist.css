@@ -1,0 +1,169 @@
+/* =========================
+   🎧 PLAYLIST HEADER
+========================= */
+.pl-title {
+    font-size: 22px;
+    margin: 20px;
+    color: #fff;
+}
+
+/* =========================
+   🎧 GRID DE PLAYLISTS
+========================= */
+.pl-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 15px;
+    padding: 20px;
+}
+
+/* =========================
+   🎧 CARD PLAYLIST
+========================= */
+.pl-card {
+    background: #1e1e1e;
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.pl-card:hover {
+    transform: scale(1.03);
+}
+
+.pl-cover {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+}
+
+.pl-info {
+    padding: 10px;
+}
+
+.pl-name {
+    font-size: 16px;
+    margin: 0;
+    color: #fff;
+}
+
+.pl-desc {
+    font-size: 12px;
+    color: #aaa;
+}
+
+/* =========================
+   🎧 BOTÃO VOLTAR
+========================= */
+.pl-back {
+    margin: 10px;
+    padding: 8px 12px;
+    background: #333;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+/* =========================
+   🎧 GRID MUSICAS
+========================= */
+.pl-music-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px;
+}
+
+/* =========================
+   🎧 MUSIC CARD
+========================= */
+.pl-music-card {
+    background: #1a1a1a;
+    padding: 12px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+.pl-music-card:hover {
+    background: #2a2a2a;
+}
+
+.pl-music-name {
+    color: #fff;
+    font-size: 14px;
+}
+
+.pl-music-artist {
+    color: #888;
+    font-size: 12px;
+}
+
+.pl-play-btn {
+    background: #00c853;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* =========================
+   🎧 HEADER PLAYLIST
+========================= */
+.pl-header {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    padding: 20px;
+    background: linear-gradient(180deg, #222, #111);
+    border-bottom: 1px solid #333;
+}
+
+.pl-header-cover {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.pl-header-info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.pl-header-title {
+    font-size: 22px;
+    color: #fff;
+    margin: 0;
+}
+
+.pl-header-meta {
+    display: flex;
+    gap: 10px;
+    font-size: 12px;
+    color: #aaa;
+}
+
+.pl-music-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+.pl-delete-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: #ff4d4d;
+    font-size: 18px;
+}
+
+.pl-delete-btn:hover {
+    transform: scale(1.2);
+}

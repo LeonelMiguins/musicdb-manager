@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Manager</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/artistView.css">
+    <link rel="stylesheet" href="css/playlist.css">
+    <link rel="stylesheet" href="css/modalScraper.css">
+</head>
+
+<body>
+
+    <!-- 🔝 NAVBAR -->
+    <header class="navbar">
+        <div class="logo">🎵 MusicDB</div>
+
+        <nav class="nav-actions">
+            <button onclick="loadHome()">Home</button>
+            <button onclick="abrirModal('artista')">New Artist</button>
+            <button onclick="abrirModal('album')">New Album</button>
+            <button onclick="loadPlaylists()">🎧 Playlists</button>
+            <button onclick="abrirScraper()">Scraper</button>
+            <button id="export-db-btn">📦 Export DB to JSON</button>
+        </nav>
+
+        <input id="search" placeholder="Buscar..." oninput="filtrar()">
+    </header>
+
+    <!-- 📦 CONTAINER PRINCIPAL -->
+    <main id="app"></main>
+
+    <!-- 🧊 MODAL GENÉRICO -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <h3 id="modalTitle"></h3>
+            <div id="modalBody"></div>
+
+            <div class="modal-actions">
+                <button onclick="salvarModal()">Salvar</button>
+                <button onclick="fecharModal()">Fechar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🧊 MODAL SCRAPER-->
+    <div id="modal-scraper" class="modal">
+        <div class="modal-content">
+
+            <h3>Scraper de Álbum</h3>
+
+            <!-- URL -->
+            <input id="scraper-url" placeholder="URL do álbum (ex: http://site.com/album/)" />
+
+            <button onclick="buscarScraper()">🔍 Buscar</button>
+
+            <hr>
+
+            <!-- RESULTADO -->
+            <input id="scraper-nome" placeholder="Nome do álbum" />
+            <input id="scraper-ano" placeholder="1996" />
+            <input id="scraper-genero" placeholder="Gênero" />
+            <input id="scraper-servidor" placeholder="Servidor" />
+            <input id="scraper-artista" placeholder="ID do artista" />
+            <input id="scraper-cover" placeholder="Cover URL" />
+
+            <div id="scraper-resultados"></div>
+
+            <div class="modal-actions">
+                <button onclick="salvarScraper()">Salvar</button>
+                <button onclick="fecharScraper()">Fechar</button>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="music-playlist-modal" class="modal">
+        <div class="modal-content">
+
+            <h2>Adicionar música</h2>
+
+            <input id="music-playlist-modal-name" placeholder="Nome da música">
+            <input id="music-playlist-modal-artist" placeholder="Artista">
+            <input id="music-playlist-modal-url" placeholder="URL da música">
+            <input id="music-playlist-modal-cover" placeholder="Cover (opcional)">
+
+            <button onclick="saveMusicToPlaylist()">Salvar</button>
+            <button onclick="closeMusicPlaylistModal()">Fechar</button>
+
+        </div>
+    </div>
+
+
+    <script type="module" src="js/main.js"></script>
+</body>
+
+</html>

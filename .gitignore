@@ -1,18 +1,5 @@
-# Node modules
 node_modules/
-
-# Arquivos de ambiente
 .env
-.env.*
-
-# Build / dist
 dist/
 build/
-
-# Sistema
 .DS_Store
-Thumbs.db
-
-# IDEs / editores
-.vscode/
-.idea/

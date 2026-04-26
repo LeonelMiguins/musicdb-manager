@@ -1,25 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const controller = require('../controllers/musicas');
+const MusicasController = require('../controllers/musicas');
 
-// GET todas as músicas
-router.get('/', async (req, res) => {
-    try {
-        const data = await controller.getMusicas();
-        res.json(data);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
+router.get('/', MusicasController.getAll);
+router.get('/album/:id', MusicasController.getByAlbum);
 
-// POST criar música
-router.post('/', async (req, res) => {
-    try {
-        const result = await controller.addMusica(req.body);
-        res.json(result);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
+// ✔ POST AQUI
+router.post('/', MusicasController.create);
 
 module.exports = router;

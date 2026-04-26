@@ -1,52 +1,67 @@
 const express = require('express');
 const router = express.Router();
-const controller = require('../controllers/albuns');
+const db = require('../database/db');
 
-// GET todos os álbuns
-router.get('/', async (req, res) => {
-    try {
-        const data = await controller.getAlbuns();
-        res.json(data);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
+// 🔹 GET por ID (ADICIONA ISSO)
+router.get('/:id', (req, res) => {
+    db.get(
+        "SELECT * FROM albuns WHERE id = ?",
+        [req.params.id],
+        (err, row) => {
+            if (err) return res.status(500).json(err);
+
+            if (!row) {
+                return res.status(404).json({ error: 'Álbum não encontrado' });
+            }
+
+            res.json(row);
+        }
+    );
 });
 
-// POST criar álbum
-router.post('/', async (req, res) => {
-    try {
-        const result = await controller.addAlbum(req.body);
-        res.json(result);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
+// 🔹 GET lista / filtro por artista
+router.get('/', (req, res) => {
+    const artista_id = req.query.artista_id;
 
-router.post('/', async (req, res) => {
-    try {
-        const {
-            artista_id,
-            nome,
-            cover,
-            genero,
-            servidor,
-            ano
-        } = req.body;
-
-        const result = await Album.addAlbum({
-            artista_id,
-            nome,
-            cover,
-            genero,
-            servidor,
-            ano
+    if (artista_id) {
+        db.all(
+            "SELECT * FROM albuns WHERE artista_id = ?",
+            [artista_id],
+            (err, rows) => {
+                if (err) return res.status(500).json(err);
+                res.json(rows);
+            }
+        );
+    } else {
+        db.all("SELECT * FROM albuns", [], (err, rows) => {
+            if (err) return res.status(500).json(err);
+            res.json(rows);
         });
-
-        res.json(result);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
     }
 });
 
+router.post('/', (req, res) => {
+    const { nome, ano, cover, genero, artista_id } = req.body;
+
+    db.run(
+        `INSERT INTO albuns (nome, ano, cover, genero, artista_id)
+         VALUES (?, ?, ?, ?, ?)`,
+        [nome, ano, cover, genero, artista_id],
+        function (err) {
+            if (err) {
+                return res.status(500).json(err);
+            }
+
+            return res.json({
+                id: this.lastID,
+                nome,
+                ano,
+                cover,
+                genero,
+                artista_id
+            });
+        }
+    );
+});
 
 module.exports = router;

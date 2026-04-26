@@ -1,5 +1,3 @@
-// script para fazer scraping de arquivos MP3 e capas de álbuns de um diretório/servidor web
-
 const axios = require("axios");
 const cheerio = require("cheerio");
 
