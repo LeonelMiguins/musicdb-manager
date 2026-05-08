@@ -9,6 +9,11 @@ import { salvarModal } from "./modals/modalActions.js";
 
 import { openAddMusicModal, closeAddMusicModal, saveMusic } from "./modals/addMusicModal.js";
 
+import {
+    buscarScraper,
+    salvarScraper
+} from "./modals/scraperActions.js";
+
 window.openAddMusicModal = openAddMusicModal;
 window.closeAddMusicModal = closeAddMusicModal;
 window.saveMusic = saveMusic;
@@ -24,6 +29,9 @@ window.loadAlbum = loadAlbum;
 window.loadArtista = loadArtista;
 window.loadPlaylists = loadPlaylists;
 window.loadPlaylistMusicas = loadPlaylistMusicas;
+
+window.buscarScraper = buscarScraper;
+window.salvarScraper = salvarScraper;
 
 // =========================
 // APP ROOT

@@ -29,3 +29,65 @@
     display: flex;
     gap: 10px;
 }
+
+/* =========================
+   SCRAPER MODAL
+========================= */
+
+.scraper-layout {
+    display: flex;
+    gap: 20px;
+
+    width: 100%;
+    height: 70vh;
+
+    overflow: hidden;
+}
+
+.scraper-left {
+    width: 320px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.scraper-right {
+    flex: 1;
+
+    background: #181818;
+
+    border-radius: 12px;
+
+    padding: 16px;
+
+    overflow-y: auto;
+}
+
+.preview-list {
+    margin-top: 10px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    max-height: 500px;
+
+    overflow-y: auto;
+}
+
+.preview-list li {
+    padding: 8px;
+    background: #232323;
+    border-radius: 8px;
+}
+
+/* modal maior */
+.modal-content {
+    width: 90vw;
+    max-width: 1200px;
+
+    height: 85vh;
+
+    overflow: hidden;
+}
