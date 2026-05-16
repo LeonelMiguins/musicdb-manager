@@ -1,0 +1,230 @@
+/* =========================
+   PAGE
+========================= */
+
+.album-page {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 35px;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.album-header {
+
+    display: flex;
+
+    gap: 35px;
+
+    align-items: flex-start;
+}
+
+/* =========================
+   LEFT
+========================= */
+
+.album-header-left {
+
+    flex-shrink: 0;
+}
+
+/* =========================
+   COVER
+========================= */
+
+.album-page-cover {
+
+    width: 320px;
+
+    border-radius: 24px;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,0.4);
+}
+
+/* =========================
+   RIGHT
+========================= */
+
+.album-header-right {
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: space-between;
+
+    gap: 25px;
+
+    flex: 1;
+}
+
+/* =========================
+   INFO
+========================= */
+
+.album-page-info {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 12px;
+}
+
+.album-page-info h1 {
+
+    font-size: 42px;
+}
+
+.album-page-info h2 {
+
+    font-size: 24px;
+
+    color: #b8c0d9;
+}
+
+.album-page-info p {
+
+    color: #8e99b3;
+
+    font-size: 15px;
+}
+
+/* =========================
+   ACTIONS
+========================= */
+
+.album-actions {
+
+    display: flex;
+
+    gap: 14px;
+
+    flex-wrap: wrap;
+}
+
+.album-action-btn {
+
+    border: none;
+
+    background: #22293a;
+
+    color: white;
+
+    padding: 14px 18px;
+
+    border-radius: 14px;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+
+    font-weight: bold;
+}
+
+.album-action-btn:hover {
+
+    background: #2f3850;
+}
+
+.album-action-btn.danger {
+
+    background: #aa2b2b;
+}
+
+.album-action-btn.danger:hover {
+
+    background: #d63d3d;
+}
+
+/* =========================
+   TRACKS
+========================= */
+
+.album-page-tracks {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 14px;
+}
+
+/* =========================
+   TRACK
+========================= */
+
+.album-track {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    padding: 14px 18px;
+
+    border-radius: 14px;
+
+    background: #181d28;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.album-track:hover {
+
+    background: #22293a;
+}
+
+/* track ativa */
+
+.active-track {
+
+    background: #6c8cff !important;
+
+    color: white;
+}
+
+/* numero */
+
+.track-number {
+
+    min-width: 30px;
+
+    opacity: 0.7;
+
+    font-weight: bold;
+}
+
+/* titulo */
+
+.track-title {
+
+    font-size: 15px;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 850px) {
+
+    .album-header {
+
+        flex-direction: column;
+    }
+
+    .album-page-cover {
+
+        width: 100%;
+    }
+
+}

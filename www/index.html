@@ -1,115 +1,348 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Music Manager</title>
+    <meta charset="UTF-8" />
 
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/artistView.css">
-    <link rel="stylesheet" href="css/playlist.css">
-    <link rel="stylesheet" href="css/modalScraper.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Fenix Music Manager</title>
+
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="css/albumCard.css" />
+    <link rel="stylesheet" href="css/modal.css" />
+    <link rel="stylesheet" href="css/renderAlbumPage.css" />
+    <link rel="stylesheet" href="css/renderPlaylistPage.css" />
+    <link rel="stylesheet" href="css/addMusicModal.css" />
 </head>
 
 <body>
 
-    <!-- 🔝 NAVBAR -->
-    <header class="navbar">
-        <div class="logo">🎵 MusicDB</div>
+    <!-- ========================= -->
+    <!-- HEADER -->
+    <!-- ========================= -->
 
-        <nav class="nav-actions">
-            <button onclick="loadHome()">Home</button>
-            <button onclick="abrirModal('artista')">New Artist</button>
-            <button onclick="abrirModal('album')">New Album</button>
-            <button onclick="abrirModal('playlists')">New Playlist</button>
-            <button onclick="loadPlaylists()">🎧 Playlists</button>
-            <button onclick="abrirModal('scraper')">Scraper</button>
-            <button id="export-db-btn">📦 Export DB to JSON</button>
+    <header class="topbar">
+
+        <div class="logo">
+            Fenix Music
+        </div>
+
+        <nav class="navbar">
+            <button class="nav-btn active">
+                Home
+            </button>
+            <button class="nav-btn" id="btn-render-albums">
+                Albums
+            </button>
+            <button id="btn-render-playlists" class="nav-btn">
+                Playlists
+            </button>
+
+            <!-- Scraper -->
+            <div class="dropdown">
+                <button class="nav-btn dropdown-toggle">
+                    Import ▼
+                </button>
+                <div class="dropdown-menu">
+                    <button id="btn-import-archive" class="dropdown-item">Internet Archive</button>
+                    <button id="btn-open-palco" class="dropdown-item">Palco Mp3</button>
+                    <button id="btn-import-json" class="dropdown-item">Importar Json</button>
+                </div>
+            </div>
+
+            <!-- Exportar -->
+            <div class="dropdown">
+                <button class="nav-btn dropdown-toggle">
+                    Exportar ▼
+                </button>
+                <div class="dropdown-menu">
+                    <button class="dropdown-item">Backup DB</button>
+                    <button id="export-db-to-json" class="dropdown-item">Exportar Json</button>
+                </div>
+
+            </div>
+
         </nav>
 
-        <input id="search" placeholder="Buscar..." oninput="filtrar()">
     </header>
 
-    <!-- 📦 CONTAINER PRINCIPAL -->
-    <main id="app"></main>
+    <!-- MAIN -->
+    <main id="main-container">
+        <!-- Conteudo dinamico aqui-->
+    </main>
 
-    <!-- 🧊 MODAL GENÉRICO -->
-    <div id="modal" class="modal">
-        <div class="modal-content">
-            <h3 id="modalTitle"></h3>
-            <div id="modalBody"></div>
 
-            <div class="modal-actions">
-                <button onclick="salvarModal()">Salvar</button>
-                <button onclick="fecharModal()">Fechar</button>
-            </div>
-        </div>
-    </div>
+    <!-- MODAL ADD MUSIC -->
 
-    <!-- 🧊 MODAL SCRAPER-->
-    <div id="modal-scraper" class="modal">
+    <div id="modal-add-music" class="modal hidden">
+
         <div class="modal-content">
 
-            <h3>Scraper de Álbum</h3>
+            <h2>
+                Adicionar Música
+            </h2>
 
-            <!-- URL -->
-            <input id="scraper-url" placeholder="URL do álbum (ex: http://site.com/album/)" />
+            <input type="text" id="add-music-title" placeholder="Título">
 
-            <button onclick="buscarScraper()">🔍 Buscar</button>
+            <input type="text" id="add-music-artist" placeholder="Artista">
 
-            <hr>
+            <input type="text" id="add-music-url" placeholder="URL MP3">
 
-            <!-- RESULTADO -->
-            <input id="scraper-nome" placeholder="Nome do álbum" />
-            <input id="scraper-ano" placeholder="1996" />
-            <input id="scraper-genero" placeholder="Gênero" />
-            <input id="scraper-servidor" placeholder="Servidor" />
-            <input id="scraper-artista" placeholder="ID do artista" />
-            <input id="scraper-cover" placeholder="Cover URL" />
-
-            <div id="scraper-resultados"></div>
+            <input type="text" id="add-music-cover" placeholder="Cover">
 
             <div class="modal-actions">
-                <button onclick="salvarScraper()">Salvar</button>
-                <button onclick="fecharScraper()">Fechar</button>
+
+                <button id="btn-save-music">
+                    Salvar
+                </button>
+
+                <button id="btn-close-music-modal">
+                    Fechar
+                </button>
+
             </div>
 
         </div>
+
     </div>
 
-    <div id="music-playlist-modal" class="modal">
-        <div class="modal-content">
+    <div class="app-modal hidden" id="modal-palco">
 
-            <h2>Adicionar música</h2>
+        <div class="app-modal-box .palco-modal-box">
 
-            <input id="music-playlist-modal-name" placeholder="Nome da música">
-            <input id="music-playlist-modal-artist" placeholder="Artista">
-            <input id="music-playlist-modal-url" placeholder="URL da música">
-            <input id="music-playlist-modal-cover" placeholder="Cover (opcional)">
+            <button class="app-modal-close" id="close-palco-modal">
+                ✕
+            </button>
 
-            <button onclick="saveMusicToPlaylist()">Salvar</button>
-            <button onclick="closeMusicPlaylistModal()">Fechar</button>
+            <div class="form-group">
+                <h2>
+                    Importar Palco MP3
+                </h2>
+
+                <input type="text" id="palco-url" placeholder="URL do álbum">
+
+                <div class="form-actions">
+                    <button id="btn-search-palco">
+
+                        Buscar
+
+                    </button>
+
+                </div>
+
+
+
+                <p id="palco-error"></p>
+
+            </div>
 
         </div>
+
     </div>
 
-    <div id="add-music-modal" class="modal" style="display:none;">
-  <div class="modal-content">
+    <!-- ========================= -->
+    <!-- MODAL INTERNET ARCHIVE -->
+    <!-- ========================= -->
 
-    <h3>Adicionar Música</h3>
+    <div class="app-modal hidden" id="modal-archive">
 
-    <input id="music-name" placeholder="Nome da música">
-    <input id="music-url" placeholder="URL da música">
-    <input id="music-cover" placeholder="Cover (opcional)">
+        <div class="app-modal-box archive-modal-box">
 
-    <button onclick="saveMusic()">Salvar</button>
-    <button onclick="closeAddMusicModal()">Cancelar</button>
+            <button class="app-modal-close" id="close-archive-modal">
+                ✕
+            </button>
 
-  </div>
-</div>
+            <h2 class="modal-title">
+                Importar do Internet Archive
+            </h2>
+
+            <div class="form-group">
+
+                <label>
+                    URL do álbum
+                </label>
+
+                <input type="text" id="archive-url" placeholder="https://archive.org/details/...">
+
+            </div>
+
+            <button id="btn-search-archive">
+
+                Buscar Álbum
+
+            </button>
+
+            <p id="archive-error" class="archive-error">
+            </p>
+
+        </div>
+
+    </div>
+
+    <!-- MODAL -->
+    <div class="app-modal hidden" id="modal-album">
+
+        <div class="app-modal-box album-modal-layout">
+
+            <!-- FECHAR -->
+
+            <button class="app-modal-close" id="app-modal-close">
+                ✕
+            </button>
+
+            <!-- ========================= -->
+            <!-- ESQUERDA -->
+            <!-- ========================= -->
+
+            <div class="album-modal-left">
+
+                <h2 class="modal-title">
+                    Novo Álbum
+                </h2>
+
+                <div class="form-group">
+
+                    <label>
+                        Capa
+                    </label>
+
+                    <input type="text" id="modal-album-cover" placeholder="URL da capa">
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>
+                        Título
+                    </label>
+
+                    <input type="text" id="modal-album-titulo" placeholder="Título">
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>
+                        Artista
+                    </label>
+
+                    <input type="text" id="modal-album-artista" placeholder="Artista">
+
+                </div>
 
 
+                <div class="form-group">
+
+                    <label>
+                        Relacionado
+                    </label>
+
+                    <input type="text" id="modal-album-relacionado" placeholder="Relacionado">
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>
+                        Ano
+                    </label>
+
+                    <input type="text" id="modal-album-ano" placeholder="2025">
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>
+                        Gênero
+                    </label>
+
+                    <input type="text" id="modal-album-genero" placeholder="Rock">
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>
+                        Servidor
+                    </label>
+
+                    <input type="text" id="modal-album-servidor" placeholder="Servidor">
+
+                </div>
+
+                <div class="form-group">
+                    <label>Autor</label>
+                    <input type="text" id="modal-album-autor" placeholder="Autor">
+                </div>
+
+                <div class="form-group">
+                    <label>Tipo </label>
+                    <div class="album-type-selector">
+                        <button type="button" class="album-type-btn active" data-type="album">
+                            Álbum
+                        </button>
+
+                        <button type="button" class="album-type-btn" data-type="playlist">
+                            Playlist
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+
+                    <button id="modal-save-album-btn"> Salvar No Banco De Dados</button>
+                    <button id="modal-save-album-btn-json"> Salvar Como Json</button>
+
+                </div>
+
+            </div>
+
+            <!-- ========================= -->
+            <!-- DIREITA -->
+            <!-- ========================= -->
+
+            <div class="album-modal-right">
+
+                <!-- CAPA -->
+
+                <div class="album-preview">
+
+                    <img id="modal-preview-cover" src="https://placehold.co/400x400">
+
+                </div>
+
+                <!-- MUSICAS -->
+
+                <div class="album-tracks">
+
+                    <h3>
+                        Músicas
+                    </h3>
+
+                    <div id="modal-track-list">
+
+                        <div class="track-item">
+                            01 • Nome da música
+                        </div>
+
+                        <div class="track-item">
+                            02 • Outra música
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <audio id="album-audio-player" hidden></audio>
+    <!-- scripts -->
     <script type="module" src="js/main.js"></script>
 </body>
 

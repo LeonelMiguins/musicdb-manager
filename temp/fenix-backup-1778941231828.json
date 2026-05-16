@@ -1,0 +1,116 @@
+{
+  "albums": [
+    {
+      "id": 2,
+      "type": "album",
+      "album": "Atemporal Ep.1 - Ao Vivo em Salvador",
+      "artist": "Calcinha Preta",
+      "related": null,
+      "year": "2024",
+      "genrer": "Rock",
+      "cover": "https://cdn-academy.akamaized.net/sscdn/tb/326x326/palcomp3-discografia/9/2/c/7/899b3dfa93de4a94861cff99f70d1fea.jpg",
+      "server": "palco-mp3",
+      "author": "Leo Miguins",
+      "tracks": [
+        {
+          "title": "Relógio De Saudade (Feat Maiara E Maraisa)",
+          "artist": "Calcinha Preta",
+          "url": "https://palcocdn.akamaized.net/c/8/6/7/calcinhapreta-relogio-de-saudade-feat-maiara-e-maraisa-e296b885.mp3"
+        },
+        {
+          "title": "Cobertor - Atemporal",
+          "artist": "Calcinha Preta",
+          "url": "https://palcocdn.akamaized.net/6/6/c/5/calcinhapreta-cobertor-atemporal-2122bdf4.mp3"
+        },
+        {
+          "title": "Pouca Roupa - Atemporal",
+          "artist": "Calcinha Preta",
+          "url": "https://palcocdn.akamaized.net/e/c/b/3/calcinhapreta-pouca-roupa-dda28152.mp3"
+        },
+        {
+          "title": "Sem Explicação (I Will Be) - Atemporal",
+          "artist": "Calcinha Preta",
+          "url": "https://palcocdn.akamaized.net/2/1/2/9/calcinhapreta-sem-explicacao-atemporal-72d69a46.mp3"
+        },
+        {
+          "title": "Liga Pra Mim - Atemporal",
+          "artist": "Calcinha Preta",
+          "url": "https://palcocdn.akamaized.net/f/a/6/a/calcinhapreta-liga-pra-mim-atemporal-620b65cf.mp3"
+        },
+        {
+          "title": "E O Vento Levou - Atemporal",
+          "artist": "Calcinha Preta",
+          "url": "https://palcocdn.akamaized.net/3/b/a/c/calcinhapreta-e-o-vento-levou-atemporal-6438aee7.mp3"
+        },
+        {
+          "title": "Furunfa / Te Quero Namorar - Atemporal",
+          "artist": "Calcinha Preta",
+          "url": "https://palcocdn.akamaized.net/d/2/2/2/calcinhapreta-furunfa-te-quero-namorar-atemporal-cabf2f28.mp3"
+        },
+        {
+          "title": "cu",
+          "artist": "cu",
+          "url": "adadad"
+        }
+      ]
+    }
+  ],
+  "playlists": [
+    {
+      "id": 4,
+      "type": "playlist",
+      "album": "A Paz Necessária [EP]",
+      "artist": "Alessa",
+      "related": "",
+      "year": "2009",
+      "genrer": "Rock",
+      "cover": "https://ia601900.us.archive.org/13/items/a-paz-ness-aless/cover.jpg?cnt=0",
+      "server": "internet-archive",
+      "author": "Leo Miguins",
+      "tracks": [
+        {
+          "title": "A Paz Necessária",
+          "artist": "Alessa",
+          "url": "https://archive.org/download/a-paz-ness-aless/A%20Paz%20Necess%C3%A1ria.mp3",
+          "cover": "https://ia601900.us.archive.org/13/items/a-paz-ness-aless/cover.jpg?cnt=0"
+        },
+        {
+          "title": "A Queda",
+          "artist": "Alessa",
+          "url": "https://archive.org/download/a-paz-ness-aless/A%20Queda.mp3",
+          "cover": "https://ia601900.us.archive.org/13/items/a-paz-ness-aless/cover.jpg?cnt=0"
+        },
+        {
+          "title": "Ascenção",
+          "artist": "Alessa",
+          "url": "https://archive.org/download/a-paz-ness-aless/Ascen%C3%A7%C3%A3o.mp3",
+          "cover": "https://ia601900.us.archive.org/13/items/a-paz-ness-aless/cover.jpg?cnt=0"
+        },
+        {
+          "title": "Quando Ela Viu o Céu",
+          "artist": "Alessa",
+          "url": "https://archive.org/download/a-paz-ness-aless/Quando%20Ela%20Viu%20o%20C%C3%A9u.mp3",
+          "cover": "https://ia601900.us.archive.org/13/items/a-paz-ness-aless/cover.jpg?cnt=0"
+        },
+        {
+          "title": "Sua Vez",
+          "artist": "Alessa",
+          "url": "https://archive.org/download/a-paz-ness-aless/Sua%20Vez.mp3",
+          "cover": "https://ia601900.us.archive.org/13/items/a-paz-ness-aless/cover.jpg?cnt=0"
+        },
+        {
+          "title": "cu",
+          "artist": "cu",
+          "url": "adadad.mp3",
+          "cover": ""
+        },
+        {
+          "title": "cvcvcvcv",
+          "artist": "cvcvcvc",
+          "url": "vcvcvcv",
+          "cover": ""
+        }
+      ]
+    }
+  ]
+}

@@ -1,15 +1,74 @@
-const express = require("express");
-const router = express.Router();
-const exportDB = require("../scripts/export-db-json");
+import express from 'express';
 
-router.get("/", async (req, res) => {
-    const result = await exportDB();
+import fs from 'fs';
+import path from 'path';
 
-    if (!result.success) {
-        return res.status(500).json(result);
+import {
+    exportDB
+}
+from '../scripts/exportDB.js';
+
+const router =
+    express.Router();
+
+router.get(
+    '/db-json',
+
+    async (req, res) => {
+
+        try {
+
+            const data =
+                await exportDB();
+
+            const tempDir =
+                path.resolve('./temp');
+
+            if (
+                !fs.existsSync(tempDir)
+            ) {
+
+                fs.mkdirSync(tempDir);
+
+            }
+
+            const filePath =
+                path.join(
+
+                    tempDir,
+
+                    `fenix-backup-${Date.now()}.json`
+
+                );
+
+            fs.writeFileSync(
+
+                filePath,
+
+                JSON.stringify(
+                    data,
+                    null,
+                    2
+                )
+
+            );
+
+            res.download(filePath);
+
+        } catch (err) {
+
+            console.log(err);
+
+            res.status(500).json({
+
+                error:
+                    err.message
+
+            });
+
+        }
+
     }
+);
 
-    res.json(result);
-});
-
-module.exports = router;
+export default router;

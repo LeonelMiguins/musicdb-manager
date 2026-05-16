@@ -1,39 +1,111 @@
-export function openAddMusicModal() {
-    document.getElementById('add-music-modal').style.display = 'flex';
+let CURRENT_TYPE = null;
+let CURRENT_ID = null;
+
+// =========================
+// OPEN
+// =========================
+
+export function openMusicModal(
+    type,
+    id
+) {
+
+    CURRENT_TYPE = type;
+    CURRENT_ID = id;
+
+    document
+        .getElementById(
+            'modal-add-music'
+        )
+        .classList.remove(
+            'hidden'
+        );
 }
 
-export function closeAddMusicModal() {
-    document.getElementById('add-music-modal').style.display = 'none';
+// =========================
+// CLOSE
+// =========================
+
+export function closeMusicModal() {
+
+    document
+        .getElementById(
+            'modal-add-music'
+        )
+        .classList.add(
+            'hidden'
+        );
 }
+
+// =========================
+// SAVE
+// =========================
 
 export async function saveMusic() {
-    const nome = document.getElementById('music-name').value;
-    const url = document.getElementById('music-url').value;
-    const cover = document.getElementById('music-cover').value;
 
-    const albumId = localStorage.getItem("CURRENT_ALBUM_ID");
+    const music = {
 
-    if (!albumId) {
-        alert("Nenhum álbum selecionado");
-        return;
+        title:
+            document.getElementById(
+                'add-music-title'
+            ).value,
+
+        artist:
+            document.getElementById(
+                'add-music-artist'
+            ).value,
+
+        url:
+            document.getElementById(
+                'add-music-url'
+            ).value,
+
+        cover:
+            document.getElementById(
+                'add-music-cover'
+            ).value
+    };
+
+    try {
+
+        const response =
+            await fetch(
+                `/api/${CURRENT_TYPE}s/${CURRENT_ID}/music`,
+                {
+
+                    method: 'POST',
+
+                    headers: {
+                        'Content-Type':
+                            'application/json'
+                    },
+
+                    body:
+                        JSON.stringify(
+                            music
+                        )
+                }
+            );
+
+        const result =
+            await response.json();
+
+        console.log(result);
+
+        alert('Música adicionada!');
+
+        closeMusicModal();
+
+        // recarrega tela
+
+        //location.reload();
+
+    } catch (err) {
+
+        console.error(err);
+
+        alert(
+            'Erro ao adicionar música'
+        );
     }
-
-    await fetch('/api/musicas', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            nome,
-            url,
-            album_id: albumId,
-            cover
-        })
-    });
-
-    alert("Música adicionada ao album - "+albumId);
-    console("Música adicionada ao album - "+albumId)
-
-    closeAddMusicModal();
-
-    // 🔥 IMPORTANTE: precisa estar global
-    window.loadAlbum(albumId);
 }

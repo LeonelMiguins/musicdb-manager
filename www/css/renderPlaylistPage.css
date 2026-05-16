@@ -1,0 +1,121 @@
+.playlist-page {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 30px;
+}
+
+.playlist-header {
+
+    display: flex;
+
+    gap: 30px;
+}
+
+.playlist-header-left {
+
+    display: flex;
+}
+
+.playlist-header-right {
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: space-between;
+
+    gap: 20px;
+}
+
+.playlist-page-cover {
+
+    width: 300px;
+
+    border-radius: 20px;
+}
+
+.playlist-page-info {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 12px;
+}
+
+.playlist-actions {
+
+    display: flex;
+
+    gap: 14px;
+
+    margin-top: 20px;
+}
+
+.playlist-action-btn {
+
+    border: none;
+
+    padding: 14px 18px;
+
+    border-radius: 14px;
+
+    background: #20283a;
+
+    color: white;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.playlist-action-btn:hover {
+
+    background: #2a3650;
+}
+
+.playlist-action-btn.danger {
+
+    background: #7c2323;
+}
+
+.playlist-action-btn.danger:hover {
+
+    background: #a52e2e;
+}
+
+.playlist-page-tracks {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 14px;
+}
+
+.playlist-track {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    padding: 14px;
+
+    border-radius: 14px;
+
+    background: #181d28;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.playlist-track:hover {
+
+    background: #22293a;
+}

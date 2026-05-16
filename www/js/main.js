@@ -1,129 +1,134 @@
-import { loadAlbum } from './albumView.js';
-import { loadArtista } from './artistView.js';
-import { loadPlaylists, loadPlaylistMusicas } from './playlistView.js';
+//imports
+import { renderAlbums } from './render/renderAlbums.js';
+import { openAlbumModal, closeAlbumModal, fillAlbumModal, importJsonAlbum, saveAlbum, saveAlbumAsJson} from './modals/modalAlbum.js';
+import { openArchiveModal, closeArchiveModal, searchArchiveAlbum } from './modals/archiveImporter.js';
+import { openPalcoModal,closePalcoModal,searchPalcoAlbum } from './modals/palcoImporter.js';
+import { renderPlaylists } from './render/renderPlaylists.js';
+import { saveMusic, closeMusicModal } from './modals/addMusicModal.js';
+import {exportDatabaseJson } from './managerDb/exportDb.js';
 
-import { exportDb } from "./utils/exportDb.js";
+// exporta o banco de dados para arquivo .json
+document .getElementById('export-db-to-json') .addEventListener( 'click',  exportDatabaseJson);
 
-import { abrirModal, fecharModal } from "./modals/modalController.js";
-import { salvarModal } from "./modals/modalActions.js";
+// salvar musica na playlist ou album
+document.getElementById('btn-save-music').addEventListener('click', await saveMusic);
 
-import { openAddMusicModal, closeAddMusicModal, saveMusic } from "./modals/addMusicModal.js";
+// fechar modal de adicionar musica
+document.getElementById( 'btn-close-music-modal').addEventListener('click', closeMusicModal);
 
-import {
-    buscarScraper,
-    salvarScraper
-} from "./modals/scraperActions.js";
+// botão para salvar album como json
+document.getElementById('modal-save-album-btn-json').addEventListener('click', saveAlbumAsJson);
 
-window.openAddMusicModal = openAddMusicModal;
-window.closeAddMusicModal = closeAddMusicModal;
-window.saveMusic = saveMusic;
+// botão de abrir modal do scraper do palco mp3
+document.getElementById('btn-open-palco').addEventListener('click',openPalcoModal);
+document.getElementById('close-palco-modal').addEventListener( 'click', closePalcoModal);
+document.getElementById('btn-search-palco').addEventListener('click', searchPalcoAlbum);
 
-// =========================
-// GLOBALS (necessário pro HTML onclick)
-// =========================
-window.abrirModal = abrirModal;
-window.fecharModal = fecharModal;
-window.salvarModal = salvarModal;
+//renderiza playlist do db
+document.getElementById( 'btn-render-playlists' ).addEventListener('click',renderPlaylists);
 
-window.loadAlbum = loadAlbum;
-window.loadArtista = loadArtista;
-window.loadPlaylists = loadPlaylists;
-window.loadPlaylistMusicas = loadPlaylistMusicas;
+document.getElementById('btn-import-archive') .addEventListener( 'click',  openArchiveModal);
 
-window.buscarScraper = buscarScraper;
-window.salvarScraper = salvarScraper;
-
-// =========================
-// APP ROOT
-// =========================
-const app = document.getElementById('app');
-
-let cache = [];
-
-// =========================
-// LOAD INICIAL
-// =========================
-loadHome();
-
-export async function loadHome() {
-    const res = await fetch('/api/artistas');
-    const data = await res.json();
-
-    cache = data;
-    render(data);
-}
-
-window.loadHome = loadHome;
-
-// =========================
-// RENDER HOME
-// =========================
-function render(lista) {
-    app.innerHTML = `<div class="home-grid"></div>`;
-    const grid = app.querySelector('.home-grid');
-
-    lista.forEach(item => {
-        const div = document.createElement('div');
-        div.className = 'card';
-
-        div.innerHTML = `
-            <img src="${item.cover || ''}">
-            <div class="card-title">${item.nome}</div>
-            <div>ID: ${item.id || ''}</div>
-            <div>${item.genero || ''}</div>
-            <button class="delete-btn" data-id="${item.id}">
-                🗑 Deletar
-            </button>
-        `;
-
-        div.onclick = (e) => {
-            if (e.target.classList.contains('delete-btn')) return;
-
-            localStorage.setItem("CURRENT_ARTIST_ID", item.id);
-            loadArtista(item.id);
-        };
-
-        grid.appendChild(div);
-    });
-}
-
-// =========================
-// FILTRO
-// =========================
-function filtrar() {
-    const termo = document.getElementById('search').value.toLowerCase();
-
-    const filtrados = cache.filter(a =>
-        a.nome.toLowerCase().includes(termo)
+document
+    .getElementById(
+        'close-archive-modal'
+    )
+    .addEventListener(
+        'click',
+        closeArchiveModal
     );
 
-    render(filtrados);
-}
+document
+    .getElementById(
+        'btn-search-archive'
+    )
+    .addEventListener(
+        'click',
+        searchArchiveAlbum
+    );
 
-window.filtrar = filtrar;
+document
+    .getElementById('modal-save-album-btn')
+    .addEventListener('click', saveAlbum);
 
-// =========================
-// DELETE ARTISTA
-// =========================
-document.addEventListener('click', async (e) => {
-    if (e.target.classList.contains('delete-btn')) {
-        const id = e.target.dataset.id;
+document
+    .getElementById('btn-import-json')
+    .addEventListener('click', importJsonAlbum);
 
-        const confirmacao = confirm("Tem certeza que deseja deletar este artista?");
-        if (!confirmacao) return;
+const btnRenderAlbums =
+    document.getElementById('btn-render-albums');
 
-        await fetch(`/api/artistas/${id}`, {
-            method: 'DELETE'
-        });
+btnRenderAlbums.addEventListener('click', () => {
 
-        console.log('Artista deletado!');
-        loadHome();
-    }
+    renderAlbums();
+
 });
 
-document.getElementById("export-db-btn").onclick = async () => {
-    const confirmacao = confirm("Tem certeza que deseja exportar o banco de dados?");
-    if (!confirmacao) return;
 
-    await exportDb();
-};
+
+
+const dropdowns =
+    document.querySelectorAll('.dropdown');
+
+dropdowns.forEach(dropdown => {
+
+    const toggle =
+        dropdown.querySelector('.dropdown-toggle');
+
+    const menu =
+        dropdown.querySelector('.dropdown-menu');
+
+    toggle.addEventListener('click', (e) => {
+
+        e.stopPropagation();
+
+        // fecha outros dropdowns
+        document
+            .querySelectorAll('.dropdown-menu')
+            .forEach(otherMenu => {
+
+                if (otherMenu !== menu) {
+                    otherMenu.classList.remove('show');
+                }
+
+            });
+
+        // abre/fecha atual
+        menu.classList.toggle('show');
+
+    });
+
+});
+
+// fechar clicando fora
+document.addEventListener('click', () => {
+
+    document
+        .querySelectorAll('.dropdown-menu')
+        .forEach(menu => {
+
+            menu.classList.remove('show');
+
+        });
+
+});
+
+
+const modal = document.getElementById('modal-album');
+
+document.addEventListener('click', (event) => {
+
+    if ( event.target.id === 'btn-open-album-modal') {
+
+        modal.classList.remove( 'hidden');
+    }
+
+    if (
+        event.target.id === 'app-modal-close') {
+
+        modal.classList.add(
+            'hidden'
+        );
+    }
+
+});

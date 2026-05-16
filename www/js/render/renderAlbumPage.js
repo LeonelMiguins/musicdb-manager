@@ -1,0 +1,279 @@
+import {
+    openMusicModal
+}
+from '../modals/addMusicModal.js';
+
+export async function renderAlbumPage(albumId) {
+
+    // =========================
+    // MAIN
+    // =========================
+
+    const main =
+        document.getElementById(
+            'main-container'
+        );
+
+    main.innerHTML =
+        '<div class="loading">Carregando álbum...</div>';
+
+    // =========================
+    // FETCH
+    // =========================
+
+    const response =
+        await fetch(
+            `/api/albums/${albumId}`
+        );
+
+    const album =
+        await response.json();
+
+    // =========================
+    // TRACKS HTML
+    // =========================
+
+    const tracksHtml =
+        album.tracks.map((track, index) => `
+
+            <div
+                class="album-track"
+                data-url="${track.url}"
+            >
+
+                <span class="track-number">
+                    ${index + 1}
+                </span>
+
+                <span class="track-title">
+                    ${track.titulo}
+                </span>
+
+            </div>
+
+        `).join('');
+
+    // =========================
+    // PAGE
+    // =========================
+
+    main.innerHTML = `
+
+    <div class="album-page">
+
+        <!-- HEADER -->
+
+        <div class="album-header">
+
+            <!-- CAPA -->
+
+            <div class="album-header-left">
+
+                <img
+                    class="album-page-cover"
+                    src="${album.cover}"
+                >
+
+            </div>
+
+            <!-- INFO -->
+
+            <div class="album-header-right">
+
+                <div class="album-page-info">
+
+                    <h1>
+                        ${album.titulo}
+                    </h1>
+
+                    <h2>
+                        ${album.artista_nome}
+                    </h2>
+
+                    <p>
+                        Gênero:
+                        ${album.genero || '---'}
+                    </p>
+
+                    <p>
+                        Ano:
+                        ${album.ano || '---'}
+                    </p>
+
+                    <p>
+                        Servidor:
+                        ${album.servidor || '---'}
+                    </p>
+
+                </div>
+
+                <!-- ACTIONS -->
+
+                <div class="album-actions">
+
+                    <button
+                        id="btn-add-music-album" class="album-action-btn"
+                    >
+                        + Adicionar Música
+                    </button>
+
+                    <button
+                        class="album-action-btn danger"
+                        id="btn-delete-album"
+                    >
+                        Excluir Álbum
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- TRACKS -->
+
+        <div class="album-page-tracks">
+
+            <h3>
+                Músicas
+            </h3>
+
+            ${tracksHtml}
+
+        </div>
+
+    </div>
+`;
+
+    // =========================
+    // PLAYER GLOBAL
+    // =========================
+
+    const player =
+        document.getElementById(
+            'album-audio-player'
+        );
+
+    // =========================
+    // TRACK CLICK
+    // =========================
+
+    const trackElements =
+        document.querySelectorAll(
+            '.album-track'
+        );
+
+    trackElements.forEach(trackEl => {
+
+        trackEl.addEventListener(
+            'click',
+            () => {
+
+                // remove ativo
+
+                trackElements.forEach(el => {
+
+                    el.classList.remove(
+                        'active-track'
+                    );
+
+                });
+
+                // adiciona ativo
+
+                trackEl.classList.add(
+                    'active-track'
+                );
+
+                // toca
+
+                player.src =
+                    trackEl.dataset.url;
+
+                player.play();
+
+            }
+        );
+
+    });
+
+
+// =========================
+// DELETE ALBUM
+// =========================
+
+const deleteBtn =
+    document.getElementById(
+        'btn-delete-album'
+    );
+
+deleteBtn.addEventListener(
+    'click',
+    async () => {
+
+        const confirmDelete =
+            confirm(
+                'Deseja excluir este álbum?'
+            );
+
+        if (!confirmDelete) return;
+
+        const albumId =
+            localStorage.getItem(
+                'CURRENT_ALBUM_ID'
+            );
+
+        try {
+
+            const response =
+                await fetch(
+                    `/api/albums/${albumId}`,
+                    {
+                        method: 'DELETE'
+                    }
+                );
+
+            const result =
+                await response.json();
+
+            console.log(result);
+
+            alert('Álbum excluído!');
+
+            // volta para lista
+
+            location.reload();
+
+        } catch (err) {
+
+            console.error(err);
+
+            alert(
+                'Erro ao excluir álbum'
+            );
+        }
+
+    }
+
+    
+);
+
+
+const addMusicBtn =
+    document.getElementById(
+        'btn-add-music-album'
+    );
+
+addMusicBtn.addEventListener(
+    'click',
+    () => {
+
+        openMusicModal(
+            'album',
+            album.id
+        );
+
+    }
+);
+
+}

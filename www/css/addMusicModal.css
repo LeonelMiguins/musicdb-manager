@@ -1,0 +1,130 @@
+/* =========================
+   MODAL
+========================= */
+
+.modal {
+
+    position: fixed;
+
+    inset: 0;
+
+    background: rgba(0, 0, 0, 0.7);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    z-index: 9999;
+}
+
+/* =========================
+   HIDDEN
+========================= */
+
+.hidden {
+
+    display: none !important;
+}
+
+/* =========================
+   BOX
+========================= */
+
+.modal-content {
+
+    width: 500px;
+
+    background: #181d28;
+
+    border-radius: 20px;
+
+    padding: 25px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 16px;
+
+    box-shadow:
+        0 0 30px rgba(0,0,0,0.4);
+}
+
+/* =========================
+   TITLE
+========================= */
+
+.modal-content h2 {
+
+    margin: 0;
+
+    color: white;
+}
+
+/* =========================
+   INPUTS
+========================= */
+
+.modal-content input {
+
+    width: 100%;
+
+    padding: 14px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background: #22293a;
+
+    color: white;
+
+    font-size: 15px;
+
+    box-sizing: border-box;
+}
+
+/* =========================
+   ACTIONS
+========================= */
+
+.modal-actions {
+
+    display: flex;
+
+    gap: 12px;
+
+    margin-top: 10px;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.modal-actions button {
+
+    flex: 1;
+
+    padding: 14px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    cursor: pointer;
+
+    font-weight: bold;
+
+    background: #6c8cff;
+
+    color: white;
+
+    transition: 0.2s;
+}
+
+.modal-actions button:hover {
+
+    opacity: 0.8;
+}

@@ -1,0 +1,55 @@
+/* =========================
+   ALBUM CARD
+========================= */
+
+.album-card {
+
+    background: #181d28;
+
+    border-radius: 18px;
+
+    overflow: hidden;
+
+    transition: 0.2s;
+
+    cursor: pointer;
+
+    border: 1px solid #252b3d;
+}
+
+.album-card:hover {
+
+    transform: translateY(-5px);
+
+    border-color: #6c8cff;
+}
+
+.album-cover {
+
+    width: 100%;
+    height: 240px;
+
+    object-fit: cover;
+
+    display: block;
+}
+
+.album-info {
+    padding: 16px;
+}
+
+.album-title {
+
+    font-size: 18px;
+
+    font-weight: bold;
+
+    margin-bottom: 8px;
+}
+
+.album-artist {
+
+    color: #9aa7bd;
+
+    font-size: 14px;
+}

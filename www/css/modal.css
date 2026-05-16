@@ -1,0 +1,395 @@
+/* =========================
+   MODAL BASE
+========================= */
+
+.app-modal {
+
+    position: fixed;
+
+    inset: 0;
+
+    background:
+        rgba(0,0,0,0.75);
+
+    backdrop-filter: blur(5px);
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    z-index: 9999;
+}
+
+.app-modal.hidden {
+    display: none;
+}
+
+/* =========================
+   BOX
+========================= */
+
+.app-modal-box {
+
+    background: #181d28;
+
+    border: 1px solid #2f374b;
+
+    border-radius: 24px;
+
+    padding: 24px;
+
+    width: 100%;
+
+    max-width: 1100px;
+
+    max-height: 90vh;
+
+    overflow: hidden;
+
+    position: relative;
+
+    box-shadow:
+        0 20px 60px rgba(0,0,0,0.45);
+}
+
+/* =========================
+   FECHAR
+========================= */
+
+.app-modal-close {
+
+    position: absolute;
+
+    top: 16px;
+    right: 16px;
+
+    width: 38px;
+    height: 38px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: #293246;
+
+    color: white;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.app-modal-close:hover {
+
+    background: #ff4d4d;
+
+    transform: rotate(90deg);
+}
+
+/* =========================
+   LAYOUT
+========================= */
+
+.album-modal-layout {
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 350px;
+
+    gap: 24px;
+}
+
+/* =========================
+   LEFT
+========================= */
+
+.album-modal-left {
+
+    overflow-y: auto;
+
+    max-height: calc(90vh - 50px);
+
+    padding-right: 10px;
+}
+
+/* =========================
+   RIGHT
+========================= */
+
+.album-modal-right {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 20px;
+}
+
+/* =========================
+   TITLE
+========================= */
+
+.modal-title {
+
+    font-size: 28px;
+
+    margin-bottom: 22px;
+}
+
+/* =========================
+   FORM
+========================= */
+
+.form-group {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+
+    margin-bottom: 16px;
+}
+
+.form-group label {
+
+    color: #b7c1d6;
+
+    font-size: 14px;
+}
+
+.form-group input {
+
+    width: 100%;
+
+    background: #0f141d;
+
+    border: 1px solid #31384b;
+
+    border-radius: 14px;
+
+    padding: 14px;
+
+    color: white;
+
+    outline: none;
+}
+
+.form-group input:focus {
+
+    border-color: #6c8cff;
+
+    box-shadow:
+        0 0 0 3px rgba(108,140,255,0.15);
+}
+
+/* =========================
+   BUTTON
+========================= */
+
+.form-actions {
+
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.form-actions button {
+
+    width: 100%;
+
+    border: none;
+
+    background:
+        linear-gradient(
+            135deg,
+            #7c3aed,
+            #9333ea
+        );
+
+    color: white;
+
+    padding: 14px;
+
+    margin-bottom: 20px;
+
+    border-radius: 14px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+/* =========================
+   COVER
+========================= */
+
+.album-preview {
+
+    width: 100%;
+
+    aspect-ratio: 1/1;
+
+    border-radius: 20px;
+
+    overflow: hidden;
+
+    border: 1px solid #2c3446;
+
+    background: #10151d;
+}
+
+.album-preview img {
+
+    width: 100%;
+
+    object-fit: cover;
+}
+
+/* =========================
+   TRACKS
+========================= */
+
+.album-tracks {
+
+    background: #11151d;
+
+    border: 1px solid #2c3446;
+
+    border-radius: 18px;
+
+    padding: 16px;
+
+    overflow-y: auto;
+
+    max-height: 350px;
+}
+
+.album-tracks h3 {
+
+    margin-bottom: 14px;
+}
+
+.track-item {
+
+    background: #1b2130;
+
+    padding: 12px;
+
+    border-radius: 12px;
+
+    margin-bottom: 10px;
+
+    transition: 0.2s;
+}
+
+.track-item:hover {
+
+    background: #262f44;
+}
+
+/* =========================
+   RESPONSIVO
+========================= */
+
+@media (max-width: 900px) {
+
+    .album-modal-layout {
+
+        grid-template-columns: 1fr;
+    }
+
+    .album-modal-right {
+
+        order: -1;
+    }
+}
+
+
+/* =========================
+   ARCHIVE MODAL
+========================= */
+
+.archive-modal-box .palco-modal-box {
+
+    max-width: 500px;
+}
+
+#btn-search-archive {
+
+    width: 100%;
+
+    margin-top: 12px;
+
+    padding: 14px;
+
+    border: none;
+
+    border-radius: 14px;
+
+    background: linear-gradient(
+        135deg,
+        #7c3aed,
+        #9333ea
+    );
+
+    color: white;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+.archive-error {
+
+    margin-top: 14px;
+
+    color: #ff5b5b;
+
+    font-size: 14px;
+}
+
+/* =========================
+   TYPE SELECTOR
+========================= */
+
+.album-type-selector {
+
+    display: flex;
+
+    gap: 10px;
+}
+
+.album-type-btn {
+
+    flex: 1;
+
+    border: none;
+
+    background: #1b2130;
+
+    color: white;
+
+    padding: 14px;
+
+    border-radius: 12px;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.album-type-btn:hover {
+
+    background: #2b3550;
+}
+
+.album-type-btn.active {
+
+    background: #6c8cff;
+
+    color: white;
+}
