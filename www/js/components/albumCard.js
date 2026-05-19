@@ -22,7 +22,7 @@ export function createAlbumCard(album) {
         <div class="album-info">
 
             <div class="album-title">
-                ${album.titulo}
+                <span class="album-id">id: ${album.id}</span> ${album.titulo}  
             </div>
 
             <div class="album-artist">

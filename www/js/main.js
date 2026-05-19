@@ -6,6 +6,7 @@ import { openPalcoModal,closePalcoModal,searchPalcoAlbum } from './modals/palcoI
 import { renderPlaylists } from './render/renderPlaylists.js';
 import { saveMusic, closeMusicModal } from './modals/addMusicModal.js';
 import {exportDatabaseJson } from './managerDb/exportDb.js';
+import { renderSearch} from './render/renderSearch.js';
 
 // exporta o banco de dados para arquivo .json
 document .getElementById('export-db-to-json') .addEventListener( 'click',  exportDatabaseJson);
@@ -149,5 +150,13 @@ document.getElementById( 'backup-database') .addEventListener('click',
                 console.log(err);
                 alert( 'Erro ao criar backup');
             }
+        }
+    );
+
+// pesquisa no banco de dados
+document.getElementById('btn-search').addEventListener( 'click', () => {
+        const query = document.getElementById('search-input').value.trim();
+            if (!query) return;
+            renderSearch(query);
         }
     );

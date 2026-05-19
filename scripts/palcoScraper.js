@@ -2,11 +2,59 @@ import axios from 'axios';
 import * as cheerio from 'cheerio';
 import fs from 'fs';
 
+// =========================
+// EXPORT JSON (OPCIONAL)
+// =========================
+
+function saveAlbumJson(albumData) {
+
+    if (!fs.existsSync('./albums_json/')) {
+
+        fs.mkdirSync('./albums_json/');
+    }
+
+    // remove caracteres invalidos
+
+    const safeAlbum =
+        albumData.album.replace(
+            /[<>:"/\\|?*]/g,
+            ''
+        );
+
+    const safeArtist =
+        albumData.artist.replace(
+            /[<>:"/\\|?*]/g,
+            ''
+        );
+
+    fs.writeFileSync(
+
+        `./albums_json/${safeAlbum} - ${safeArtist}.json`,
+
+        JSON.stringify(
+            albumData,
+            null,
+            2
+        )
+    );
+
+    console.log(
+        '📁 JSON salvo:',
+        `${safeAlbum} - ${safeArtist}`
+    );
+}
+
+// =========================
+// SCRAPER PALCO MP3
+// =========================
+
 export async function scrapePalco(url) {
 
     try {
 
-        console.log('🚀 carregando página...');
+        console.log(
+            '🚀 carregando página...'
+        );
 
         // =========================
         // HTML
@@ -133,7 +181,7 @@ export async function scrapePalco(url) {
         );
 
         // =========================
-        // JSON
+        // JSON FINAL
         // =========================
 
         const albumData = {
@@ -159,34 +207,11 @@ export async function scrapePalco(url) {
         };
 
         // =========================
-        // CREATE DOWNLOADS
+        // EXPORT JSON (OPCIONAL)
         // =========================
 
-        if (
-            !fs.existsSync(
-                'albums_json'
-            )
-        ) {
-
-            fs.mkdirSync(
-                'albums_json'
-            );
-        }
-
-        // =========================
-        // SAVE JSON
-        // =========================
-
-        fs.writeFileSync(
-
-            `albums_json/${album} - ${artist}.json`,
-
-            JSON.stringify(
-                albumData,
-                null,
-                2
-            )
-        );
+        // 👉 descomente quando quiser salvar json
+        // saveAlbumJson(albumData);
 
         return albumData;
 

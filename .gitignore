@@ -1,2 +1,6 @@
 # dependencias
 node_modules/
+
+# dependencias
+# se não quiser subir a pasta com os jsons, descomentar linha abaixo
+# albums_json/ 

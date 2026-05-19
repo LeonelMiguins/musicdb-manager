@@ -53,3 +53,11 @@
 
     font-size: 14px;
 }
+
+.album-id {
+    color: #9aa7bd;
+    font-size: 13pt;
+    font-weight: 100;
+    padding-right: 5px;
+
+}

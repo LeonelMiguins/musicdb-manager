@@ -8,6 +8,7 @@ import { scrapeArchive } from './scripts/archiveScraper.js';
 import { scrapePalco } from './scripts/palcoScraper.js';
 import playlistRoutes from './routes/playlists.js';
 import backupRoutes from './routes/backup.js';
+import searchRoutes from './routes/search.js';
 
 
 const app = express();
@@ -34,6 +35,8 @@ app.use('/api/playlists', playlistRoutes);
 app.use('/api/export',exportRoutes);
 
 app.use('/api/backup-db', backupRoutes);
+
+app.use('/api/search',searchRoutes);
 
 // SCRAPER ARCHIVE
 
